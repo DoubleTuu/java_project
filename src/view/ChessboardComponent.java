@@ -51,10 +51,54 @@ public class ChessboardComponent extends JComponent {
                 if (grid[i][j].getPiece() != null) {
                     ChessPiece chessPiece = grid[i][j].getPiece();
                     System.out.println(chessPiece.getOwner());
-                    gridComponents[i][j].add(
-                            new ElephantChessComponent(
-                                    chessPiece.getOwner(),
-                                    CHESS_SIZE));
+                    if (grid[i][j].getPiece().getName()=="Elephant") {
+                        gridComponents[i][j].add(
+                                new ElephantChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Lion") {
+                        gridComponents[i][j].add(
+                                new LionChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Tiger") {
+                        gridComponents[i][j].add(
+                                new TigerChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Leopard") {
+                        gridComponents[i][j].add(
+                                new LeopardChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Wolf") {
+                        gridComponents[i][j].add(
+                                new WolfChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Dog") {
+                        gridComponents[i][j].add(
+                                new DogChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Cat") {
+                        gridComponents[i][j].add(
+                                new CatChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Mouse") {
+                        gridComponents[i][j].add(
+                                new MouseChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE));
+                    }
                 }
             }
         }
