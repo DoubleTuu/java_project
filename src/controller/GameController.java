@@ -9,7 +9,7 @@ import model.ChessboardPoint;
 import view.CellComponent;
 import view.ElephantChessComponent;
 import view.ChessboardComponent;
-// fuck
+// fuckl
 /**
  * Controller is the connection between model and view,
  * when a Controller receive a request from a view, the Controller
