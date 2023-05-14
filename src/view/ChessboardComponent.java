@@ -3,6 +3,7 @@ package view;
 
 import controller.GameController;
 import model.*;
+import view.AnimalChessComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,51 +54,59 @@ public class ChessboardComponent extends JComponent {
                     System.out.println(chessPiece.getOwner());
                     if (grid[i][j].getPiece().getName()=="Elephant") {
                         gridComponents[i][j].add(
-                                new ElephantChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "象"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Lion") {
                         gridComponents[i][j].add(
-                                new LionChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "狮"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Tiger") {
                         gridComponents[i][j].add(
-                                new TigerChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "虎"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Leopard") {
                         gridComponents[i][j].add(
-                                new LeopardChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "豹"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Wolf") {
                         gridComponents[i][j].add(
-                                new WolfChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "狼"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Dog") {
                         gridComponents[i][j].add(
-                                new DogChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "狗"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Cat") {
                         gridComponents[i][j].add(
-                                new CatChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "猫"));
                     }
                     else if (grid[i][j].getPiece().getName()=="Mouse") {
                         gridComponents[i][j].add(
-                                new MouseChessComponent(
+                                new AnimalChessComponent(
                                         chessPiece.getOwner(),
-                                        CHESS_SIZE));
+                                        CHESS_SIZE,
+                                        "鼠"));
                     }
                 }
             }
@@ -141,13 +150,13 @@ public class ChessboardComponent extends JComponent {
         this.gameController = gameController;
     }
 
-    public void setChessComponentAtGrid(ChessboardPoint point, ElephantChessComponent chess) {
+    public void setChessComponentAtGrid(ChessboardPoint point, AnimalChessComponent chess) {
         getGridComponentAt(point).add(chess);
     }
 
-    public ElephantChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
+    public AnimalChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
         // Note re-validation is required after remove / removeAll.
-        ElephantChessComponent chess = (ElephantChessComponent) getGridComponentAt(point).getComponents()[0];
+        AnimalChessComponent chess = (AnimalChessComponent) getGridComponentAt(point).getComponents()[0];
         getGridComponentAt(point).removeAll();
         getGridComponentAt(point).revalidate();
         chess.setSelected(false);
@@ -182,7 +191,7 @@ public class ChessboardComponent extends JComponent {
                 gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
             } else {
                 System.out.print("One chess here and ");
-                gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (ElephantChessComponent) clickedComponent.getComponents()[0]);
+                gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (AnimalChessComponent) clickedComponent.getComponents()[0]);
             }
         }
     }
