@@ -55,7 +55,7 @@ public class Chessboard {
         grid[8][3].setPiece(new ChessPiece(PlayerColor.RED, "homeBlue",0));
     }
 
-    private ChessPiece getChessPieceAt(ChessboardPoint point) {
+    public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
     }
 
