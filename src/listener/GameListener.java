@@ -3,7 +3,6 @@ package listener;
 import model.ChessboardPoint;
 import view.AnimalChessComponent;
 import view.CellComponent;
-import view.ElephantChessComponent;
 
 public interface GameListener {
 

@@ -167,22 +167,6 @@ public class ChessboardComponent extends JComponent {
                                         CHESS_SIZE,
                                         "鼠"));
                     }
-                    else if(grid[i][j].getPiece().getName()=="trapRed"||grid[i][j].getPiece().getName()=="trapBlue")
-                    {
-                        gridComponents[i][j].add(
-                                new AnimalChessComponent(
-                                        chessPiece.getOwner(),
-                                        CHESS_SIZE,
-                                        "陷阱"));
-                    }
-                    else if(grid[i][j].getPiece().getName()=="homeRed"||grid[i][j].getPiece().getName()=="homeBlue")
-                    {
-                        gridComponents[i][j].add(
-                                new AnimalChessComponent(
-                                        chessPiece.getOwner(),
-                                        CHESS_SIZE,
-                                        "兽穴"));
-                    }
                 }
             }
         }

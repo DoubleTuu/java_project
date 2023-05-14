@@ -36,30 +36,17 @@ public class AnimalChessComponent extends JComponent {
 
 
     @Override
-    protected void paintComponent(Graphics g) //设置点击时的红圆圈，以及设置显示如“猫”的字符大小
-    {
-        System.out.println(str);
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
-        if(str=="陷阱"||str=="兽穴")
-        {
-            font = new Font("楷体", Font.PLAIN, getWidth() *3/7);
-        }
         g2.setFont(font);
         g2.setColor(owner.getColor());
-        if(str=="陷阱"||str=="兽穴")
-        {
-            g2.drawString(str, getWidth() / 8, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
-        }
-        else
-        {
-            g2.drawString(str, getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
-        }
+        g2.drawString(str, getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
-            g.drawOval(5, 5, getWidth()-10 , getHeight()-10);
+            g.drawOval(0, 0, getWidth() , getHeight());
         }
     }
 }
