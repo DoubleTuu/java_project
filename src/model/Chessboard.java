@@ -36,6 +36,10 @@ public class Chessboard {
         grid[2][2].setPiece(new ChessPiece(PlayerColor.RED, "Leopard",5));
         grid[2][4].setPiece(new ChessPiece(PlayerColor.RED, "Wolf",4));
         grid[2][6].setPiece(new ChessPiece(PlayerColor.RED, "Elephant",8));
+        grid[0][2].setPiece(new ChessPiece(PlayerColor.RED, "trapRed",0));
+        grid[0][4].setPiece(new ChessPiece(PlayerColor.RED, "trapRed",0));
+        grid[1][3].setPiece(new ChessPiece(PlayerColor.RED, "trapRed",0));
+        grid[0][3].setPiece(new ChessPiece(PlayerColor.RED, "homeRed",0));
 
         grid[8][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Tiger",6));
         grid[8][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Lion",7));
@@ -45,7 +49,10 @@ public class Chessboard {
         grid[6][2].setPiece(new ChessPiece(PlayerColor.BLUE, "Wolf",4));
         grid[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "Leopard",5));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Mouse",1));
-
+        grid[8][2].setPiece(new ChessPiece(PlayerColor.RED, "trapBlue",0));
+        grid[8][4].setPiece(new ChessPiece(PlayerColor.RED, "trapBlue",0));
+        grid[7][3].setPiece(new ChessPiece(PlayerColor.RED, "trapBlue",0));
+        grid[8][3].setPiece(new ChessPiece(PlayerColor.RED, "homeBlue",0));
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {

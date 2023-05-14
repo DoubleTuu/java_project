@@ -1,5 +1,4 @@
 package view;
-
 import controller.GameController;
 
 import javax.swing.*;
@@ -14,7 +13,8 @@ public class ChessGameFrame extends JFrame {
     private final int HEIGTH;
 
     private final int ONE_CHESS_SIZE;
-
+    private GameController xx;
+    public static int Rounds=1;
     private ChessboardComponent chessboardComponent;
     public ChessGameFrame(int width, int height) {
         setTitle("Tu & 3Mker fucking project"); //设置标题
@@ -27,9 +27,10 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
+//        setComponentZOrder(this, 1);
         addChessboard();
         addLabel();
+        addrounds();
         addHelloButton();
     }
 
@@ -73,7 +74,13 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
     }
-
+    private void addrounds() {
+        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));
+        gg.setLocation(HEIGTH, HEIGTH / 2);
+        gg.setSize(200, 60);
+        gg.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(gg);
+    }
 //    private void addLoadButton() {
 //        JButton button = new JButton("Load");
 //        button.setLocation(HEIGTH, HEIGTH / 10 + 240);

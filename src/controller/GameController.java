@@ -6,11 +6,8 @@ import model.Constant;
 import model.PlayerColor;
 import model.Chessboard;
 import model.ChessboardPoint;
-import view.AnimalChessComponent;
-import view.CellComponent;
-import view.ElephantChessComponent;
-import view.ChessboardComponent;
-// fuckl
+import view.*;
+
 /**
  * Controller is the connection between model and view,
  * when a Controller receive a request from a view, the Controller
@@ -24,9 +21,15 @@ public class GameController implements GameListener {
     private ChessboardComponent view;
     private PlayerColor currentPlayer;
 
+//    public int gameRounds=1;
+
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
+//    public int getGameRounds()
+//    {
+//        return gameRounds;
+//    }
     public GameController(ChessboardComponent view, Chessboard model) {
         this.view = view;
         this.model = model;
@@ -47,7 +50,9 @@ public class GameController implements GameListener {
     }
 
     // after a valid move swap the player
-    private void swapColor() {
+    private void swapColor()
+    {
+        ChessGameFrame.Rounds++;
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
@@ -78,7 +83,7 @@ public class GameController implements GameListener {
             {
                 selectedPoint = point;
                 component.setSelected(true);
-                component.repaint();
+                component.repaint();//重新画棋子
             }
         }
         else if (selectedPoint.equals(point))
