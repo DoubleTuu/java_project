@@ -152,12 +152,13 @@ public class Chessboard {
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
         ChessboardComponent chessboardComponent = new ChessboardComponent(1);
-        if(getChessPieceAt(src).getOwner()==getChessPieceAt(dest).getOwner()){
+        if(getChessPieceAt(src).getOwner()!=getChessPieceAt(dest).getOwner()){
             if (calculateDistance(src, dest) == 1) {
                 if(chessboardComponent.getRiverCell().contains(src) ^ chessboardComponent.getRiverCell().contains(dest)){
                     return false;
                 }
-                else if(chessboardComponent.getTrap().contains(dest)){
+                else if((getChessPieceAt(dest).getOwner().equals(PlayerColor.BLUE) && chessboardComponent.getTrapRed().contains(dest))
+                         ||(getChessPieceAt(dest).getOwner().equals(PlayerColor.RED) && chessboardComponent.getTrapBlue().contains(dest))){
                     return true;
                 }
                 else{
@@ -165,7 +166,7 @@ public class Chessboard {
                 }
             }
             else {
-                if (getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger") {
+                if (getChessPieceAt(src).getName().equals("Lion") || getChessPieceAt(src).getName().equals("Tiger")) {
                     if (src.getRow() == dest.getRow() && !chessboardComponent.getRiverCell().contains(dest)) {
                         int big, small;
                         if (src.getCol() > dest.getCol()) {
@@ -201,6 +202,11 @@ public class Chessboard {
                         }
                         return test && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
                     }
+                    else{
+                        return false;
+                    }
+                } else {
+                    return false;
                 }
             }
         }

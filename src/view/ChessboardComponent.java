@@ -20,8 +20,10 @@ public class ChessboardComponent extends JComponent {
     private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
-    private final Set<ChessboardPoint> trap = new HashSet<>();
-    private final Set<ChessboardPoint> home = new HashSet<>();
+    private final Set<ChessboardPoint> trapBlue = new HashSet<>();
+    private final Set<ChessboardPoint> trapRed = new HashSet<>();
+    private final Set<ChessboardPoint> homeBlue = new HashSet<>();
+    private final Set<ChessboardPoint> homeRed = new HashSet<>();
     private GameController gameController;
 
     public ChessboardComponent(int chessSize) {
@@ -130,16 +132,16 @@ public class ChessboardComponent extends JComponent {
         riverCell.add(new ChessboardPoint(5,4));
         riverCell.add(new ChessboardPoint(5,5));
 
-        trap.add(new ChessboardPoint(0,2));
-        trap.add(new ChessboardPoint(0,4));
-        trap.add(new ChessboardPoint(1,3));
+        trapRed.add(new ChessboardPoint(0,2));
+        trapRed.add(new ChessboardPoint(0,4));
+        trapRed.add(new ChessboardPoint(1,3));
 
-        trap.add(new ChessboardPoint(8,2));
-        trap.add(new ChessboardPoint(8,4));
-        trap.add(new ChessboardPoint(7,3));
+        trapBlue.add(new ChessboardPoint(8,2));
+        trapBlue.add(new ChessboardPoint(8,4));
+        trapBlue.add(new ChessboardPoint(7,3));
 
-        home.add(new ChessboardPoint(0,3));
-        home.add(new ChessboardPoint(8,3));
+        homeRed.add(new ChessboardPoint(0,3));
+        homeBlue.add(new ChessboardPoint(8,3));
         for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++)
         {
             for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++)
@@ -151,16 +153,16 @@ public class ChessboardComponent extends JComponent {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }
-                else if(trap.contains(temp))
+                else if(trapBlue.contains(temp) || trapRed.contains(temp) )
                 {
                     cell = new CellComponent(Color.orange,calculatePoint(i,j),CHESS_SIZE);
                     this.add(cell);
                 }
-                else if(home.contains(temp))
+                else if(homeBlue.contains(temp) || homeRed.contains(temp))
                 {
                     cell = new CellComponent(Color.PINK,calculatePoint(i,j),CHESS_SIZE);
-                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
-                    cell.image.setIcon(icon);
+//                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
+//                    cell.image.setIcon(icon);
                     this.add(cell);
                 }
                 else
@@ -197,6 +199,21 @@ public class ChessboardComponent extends JComponent {
     private ChessboardPoint getChessboardPoint(Point point) {
         System.out.println("[" + point.y/CHESS_SIZE +  ", " +point.x/CHESS_SIZE + "] Clicked");
         return new ChessboardPoint(point.y/CHESS_SIZE, point.x/CHESS_SIZE);
+    }
+    public Set<ChessboardPoint> getRiverCell(){
+        return riverCell;
+    }
+    public Set<ChessboardPoint> getTrapBlue(){
+        return trapBlue;
+    }
+    public Set<ChessboardPoint> getTrapRed(){
+        return trapRed;
+    }
+    public Set<ChessboardPoint> getHomeBlue(){
+        return homeBlue;
+    }
+    public Set<ChessboardPoint> getHomeRed(){
+        return homeRed;
     }
     private Point calculatePoint(int row, int col) {
         return new Point(col * CHESS_SIZE, row * CHESS_SIZE);
