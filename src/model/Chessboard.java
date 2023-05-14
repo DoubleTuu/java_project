@@ -48,7 +48,7 @@ public class Chessboard {
 
     }
 
-    private ChessPiece getChessPieceAt(ChessboardPoint point) {
+    public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
     }
 
