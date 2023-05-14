@@ -56,9 +56,93 @@ public class GameController implements GameListener {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
-    private boolean win() {
+    public boolean winBlue() {
         // TODO: Check the board if there is a winner
-        return false;
+        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
+        boolean test = true;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(model.getChessPieceAt(new ChessboardPoint(i,j))!=null && model.getChessPieceOwner(new ChessboardPoint(i,j)).equals(PlayerColor.RED)) {
+                    for (int k = i - 3; k <= i + 3; k++) {
+                        if (k == i) {
+                            continue;
+                        }
+                        if (k >= 0 && k < Constant.CHESSBOARD_ROW_SIZE.getNum()) {
+                            if (model.getChessPieceAt(new ChessboardPoint(k,j)) == null) {
+                                if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                                    test = false;
+                                }
+                            } else {
+                                if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                                    test = false;
+                                }
+                            }
+                        }
+                    }
+                    for (int k = j - 3; k <= j + 3; k++) {
+                        if (k == j) {
+                            continue;
+                        }
+                        if (k >= 0 && k < Constant.CHESSBOARD_COL_SIZE.getNum()) {
+                            if (model.getChessPieceAt(new ChessboardPoint(i,k)) == null) {
+                                if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                                    test = false;
+                                }
+                            } else {
+                                if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                                    test = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return test || ( model.getChessPieceAt(new ChessboardPoint(0,3))!=null && model.getChessPieceOwner(new ChessboardPoint(0,3)).equals(PlayerColor.BLUE));
+    }
+    public boolean winRed() {
+        // TODO: Check the board if there is a winner
+        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
+        boolean test = true;
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+                if(model.getChessPieceAt(new ChessboardPoint(i,j))!=null && model.getChessPieceOwner(new ChessboardPoint(i,j)).equals(PlayerColor.BLUE)) {
+                    for (int k = i - 3; k <= i + 3; k++) {
+                        if (k == i) {
+                            continue;
+                        }
+                        if (k >= 0 && k < Constant.CHESSBOARD_ROW_SIZE.getNum()) {
+                            if (model.getChessPieceAt(new ChessboardPoint(k,j)) == null) {
+                                if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                                    test = false;
+                                }
+                            } else {
+                                if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                                    test = false;
+                                }
+                            }
+                        }
+                    }
+                    for (int k = j - 3; k <= j + 3; k++) {
+                        if (k == j) {
+                            continue;
+                        }
+                        if (k >= 0 && k < Constant.CHESSBOARD_COL_SIZE.getNum()) {
+                            if (model.getChessPieceAt(new ChessboardPoint(i,k)) == null) {
+                                if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                                    test = false;
+                                }
+                            } else {
+                                if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                                    test = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return test || ( model.getChessPieceAt(new ChessboardPoint(8,3))!=null && model.getChessPieceOwner(new ChessboardPoint(8,3)).equals(PlayerColor.RED));
     }
 
 
