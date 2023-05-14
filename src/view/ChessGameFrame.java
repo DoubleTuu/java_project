@@ -14,7 +14,9 @@ public class ChessGameFrame extends JFrame {
 
     private final int ONE_CHESS_SIZE;
     private GameController xx;
-    public static int Rounds=1;
+    public static int Rounds=2;
+    private static JTextField tfCount = new JTextField("Rounds:1");
+    private static JTextField currentColor = new JTextField("Turn: Blue");
     private ChessboardComponent chessboardComponent;
     public ChessGameFrame(int width, int height) {
         setTitle("Tu & 3Mker fucking project"); //设置标题
@@ -30,8 +32,16 @@ public class ChessGameFrame extends JFrame {
 //        setComponentZOrder(this, 1);
         addChessboard();
         addLabel();
-        addrounds();
         addHelloButton();
+        tfCount.setBounds(800, 400, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        tfCount.setFont(new Font("Arial", Font.BOLD, 25));
+        tfCount.setEditable(false);
+        add(tfCount);
+        currentColor.setBounds(800, 500, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        currentColor.setFont(new Font("Arial", Font.BOLD, 25));
+        currentColor.setEditable(false);
+        currentColor.setForeground(Color.BLUE);
+        add(currentColor);
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -74,13 +84,30 @@ public class ChessGameFrame extends JFrame {
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
     }
-    private void addrounds() {
-        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));
-        gg.setLocation(HEIGTH, HEIGTH / 2);
-        gg.setSize(200, 60);
-        gg.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(gg);
+//    private void addrounds() {
+//        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));
+//        gg.setLocation(HEIGTH, HEIGTH / 2);
+//        gg.setSize(200, 60);
+//        gg.setFont(new Font("Rockwell", Font.BOLD, 20));
+//        add(gg);
+//    }
+    public static void setRounds(){
+        tfCount.setText("Rounds:"+Rounds + "");
+        Rounds++;
     }
+    public static void setTurn(){
+        if(currentColor.getText().equals("Turn: Blue"))
+        {
+            currentColor.setText("Turn: Red");
+            currentColor.setForeground(Color.RED);
+        }
+        else{
+            currentColor.setText("Turn: Blue");
+            currentColor.setForeground(Color.BLUE);
+        }
+    }
+
+
 //    private void addLoadButton() {
 //        JButton button = new JButton("Load");
 //        button.setLocation(HEIGTH, HEIGTH / 10 + 240);

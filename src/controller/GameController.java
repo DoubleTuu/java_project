@@ -52,7 +52,8 @@ public class GameController implements GameListener {
     // after a valid move swap the player
     private void swapColor()
     {
-        ChessGameFrame.Rounds++;
+        ChessGameFrame.setRounds();
+        ChessGameFrame.setTurn();
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
