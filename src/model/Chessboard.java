@@ -1,5 +1,9 @@
 package model;
 
+import view.ChessboardComponent;
+
+import javax.swing.*;
+import java.awt.*;
 /**
  * This class store the real chess information.
  * The Chessboard has 9*7 cells, and each cell has a position for chess
@@ -90,16 +94,118 @@ public class Chessboard {
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
+        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
-        return calculateDistance(src, dest) == 1;
+        if(calculateDistance(src, dest) == 1) {
+            if(getChessPieceAt(src).getName().equals("Mouse") ) {
+                return true;
+            }
+            else if(!getChessPieceAt(src).getName().equals("Mouse"))
+            {
+                return !chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), dest.getCol()));
+            }
+        }
+        //over the river
+        if(getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger") {
+            if (src.getRow() == dest.getRow() && !chessboardComponent.getRiverCell().contains(dest)) {
+                int big, small;
+                if (src.getCol() > dest.getCol()) {
+                    big = src.getCol();
+                    small = dest.getCol();
+                } else {
+                    big = dest.getCol();
+                    small = src.getCol();
+                }
+                boolean test = true;
+                for (int i = small+1; i <big; i++) {
+                    if ( !(chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), i))
+                            && getChessPieceAt(new ChessboardPoint(dest.getRow(), i)) == null)){
+                        test = false;
+                    }
+                }
+                return test;
+            } else if (src.getCol() == dest.getCol() && !chessboardComponent.getRiverCell().contains(dest)) {
+                int big, small;
+                if (src.getRow() > dest.getRow()) {
+                    big = src.getRow();
+                    small = dest.getRow();
+                } else {
+                    small = src.getRow();
+                    big = dest.getRow();
+                }
+                boolean test = true;
+                for (int i = small+1; i < big; i++) {
+                    if ( !(chessboardComponent.getRiverCell().contains(new ChessboardPoint(i, dest.getCol()))
+                            && getChessPieceAt(new ChessboardPoint(i, dest.getCol())) == null)){
+                        test = false;
+                    }
+                }
+                return test;
+            }
+        }
+        return false;
     }
 
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
-
-        return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
+        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
+        if(getChessPieceAt(src).getOwner()==getChessPieceAt(dest).getOwner()){
+            if (calculateDistance(src, dest) == 1) {
+                if(chessboardComponent.getRiverCell().contains(src) ^ chessboardComponent.getRiverCell().contains(dest)){
+                    return false;
+                }
+                else if(chessboardComponent.getTrap().contains(dest)){
+                    return true;
+                }
+                else{
+                    return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
+                }
+            }
+            else {
+                if (getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger") {
+                    if (src.getRow() == dest.getRow() && !chessboardComponent.getRiverCell().contains(dest)) {
+                        int big, small;
+                        if (src.getCol() > dest.getCol()) {
+                            big = src.getCol();
+                            small = dest.getCol();
+                        } else {
+                            big = dest.getCol();
+                            small = src.getCol();
+                        }
+                        boolean test = true;
+                        for (int i = small + 1; i < big; i++) {
+                            if (!(chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), i))
+                                    && getChessPieceAt(new ChessboardPoint(dest.getRow(), i)) == null)) {
+                                test = false;
+                            }
+                        }
+                        return test && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
+                    } else if (src.getCol() == dest.getCol() && !chessboardComponent.getRiverCell().contains(dest)) {
+                        int big, small;
+                        if (src.getRow() > dest.getRow()) {
+                            big = src.getRow();
+                            small = dest.getRow();
+                        } else {
+                            small = src.getRow();
+                            big = dest.getRow();
+                        }
+                        boolean test = true;
+                        for (int i = small + 1; i < big; i++) {
+                            if (!(chessboardComponent.getRiverCell().contains(new ChessboardPoint(i, dest.getCol()))
+                                    && getChessPieceAt(new ChessboardPoint(i, dest.getCol())) == null)) {
+                                test = false;
+                            }
+                        }
+                        return test && getChessPieceAt(src).canCapture(getChessPieceAt(dest));
+                    }
+                }
+            }
+        }
+        else {
+            return false;
+        }
     }
 }
