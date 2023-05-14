@@ -42,9 +42,7 @@ public class Chessboard {
         grid[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "Leopard",5));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Mouse",1));
 
-
-//        grid[0][0].setPiece(new ChessPiece(PlayerColor.BLUE, "Elephant",8));
-//        grid[8][6].setPiece(new ChessPiece(PlayerColor.RED, "Elephant",8));
+        // lol
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
