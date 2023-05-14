@@ -18,11 +18,17 @@ public class ChessPiece {
     public boolean canCapture(ChessPiece target) {
         // TODO: Finish this method!
         if(this.rank>= target.rank && !(this.rank==8 && target.rank==1))
-        {return true;}
+        {
+            return true;
+        }
         else if (this.rank==8 && target.rank==1)
-        {return false;}
+        {
+            return false;
+        }
         else if (this.rank==1 && target.rank==8)
-        {return true;}
+        {
+            return true;
+        }
         return false;
     }
 
@@ -32,5 +38,9 @@ public class ChessPiece {
 
     public PlayerColor getOwner() {
         return owner;
+    }
+
+    public int getRank() {
+        return rank;
     }
 }

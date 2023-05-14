@@ -8,10 +8,7 @@ import view.AnimalChessComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
@@ -23,7 +20,8 @@ public class ChessboardComponent extends JComponent {
     private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
-
+    private final Set<ChessboardPoint> trap = new HashSet<>();
+    private final Set<ChessboardPoint> home = new HashSet<>();
     private GameController gameController;
 
     public ChessboardComponent(int chessSize) {
@@ -101,13 +99,15 @@ public class ChessboardComponent extends JComponent {
                                         CHESS_SIZE,
                                         "猫"));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Mouse") {
+                    else if (grid[i][j].getPiece().getName()=="Mouse")
+                    {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "鼠"));
                     }
+
                 }
             }
         }
@@ -130,14 +130,41 @@ public class ChessboardComponent extends JComponent {
         riverCell.add(new ChessboardPoint(5,4));
         riverCell.add(new ChessboardPoint(5,5));
 
-        for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++) {
+        trap.add(new ChessboardPoint(0,2));
+        trap.add(new ChessboardPoint(0,4));
+        trap.add(new ChessboardPoint(1,3));
+
+        trap.add(new ChessboardPoint(8,2));
+        trap.add(new ChessboardPoint(8,4));
+        trap.add(new ChessboardPoint(7,3));
+
+        home.add(new ChessboardPoint(0,3));
+        home.add(new ChessboardPoint(8,3));
+        for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++)
+        {
+            for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++)
+            {
                 ChessboardPoint temp = new ChessboardPoint(i, j);
                 CellComponent cell;
-                if (riverCell.contains(temp)) {
+                if (riverCell.contains(temp))
+                {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
-                } else {
+                }
+                else if(trap.contains(temp))
+                {
+                    cell = new CellComponent(Color.orange,calculatePoint(i,j),CHESS_SIZE);
+                    this.add(cell);
+                }
+                else if(home.contains(temp))
+                {
+                    cell = new CellComponent(Color.PINK,calculatePoint(i,j),CHESS_SIZE);
+                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
+                    cell.image.setIcon(icon);
+                    this.add(cell);
+                }
+                else
+                {
                     cell = new CellComponent(Color.LIGHT_GRAY, calculatePoint(i, j), CHESS_SIZE);
                     this.add(cell);
                 }

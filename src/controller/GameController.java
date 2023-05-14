@@ -72,19 +72,24 @@ public class GameController implements GameListener {
 
     // click a cell with a chess
     public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component) {
-        if (selectedPoint == null) {
-            if (model.getChessPieceOwner(point).equals(currentPlayer)) {
+        if (selectedPoint == null)
+        {
+            if (model.getChessPieceOwner(point).equals(currentPlayer))
+            {
                 selectedPoint = point;
                 component.setSelected(true);
                 component.repaint();
             }
-        } else if (selectedPoint.equals(point)) {
+        }
+        else if (selectedPoint.equals(point))
+        {
             selectedPoint = null;
             component.setSelected(false);
             component.repaint();
         }
         // TODO: Implement capture function
-        else if (model.isValidCapture(selectedPoint, point)){
+        else if (model.isValidCapture(selectedPoint, point))
+        {
             model.captureChessPiece(selectedPoint, point);
             view.getGridComponentAt(point).removeAll();
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));

@@ -11,11 +11,15 @@ import java.awt.*;
 public class CellComponent extends JPanel {
     private Color background;
 
+    public JLabel image;
+
     public CellComponent(Color background, Point location, int size) {
         setLayout(new GridLayout(1,1));
         setLocation(location);
         setSize(size, size);
         this.background = background;
+        image=new JLabel();
+        add(image);
     }
 
     @Override

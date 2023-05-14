@@ -42,7 +42,6 @@ public class Chessboard {
         grid[6][4].setPiece(new ChessPiece(PlayerColor.BLUE, "Leopard",5));
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Mouse",1));
 
-        // lolfuck
     }
 
     private ChessPiece getChessPieceAt(ChessboardPoint point) {
@@ -100,6 +99,7 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
+
         return getChessPieceAt(src).canCapture(getChessPieceAt(dest));
     }
 }

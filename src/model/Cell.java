@@ -1,13 +1,16 @@
-package model;
 
+package model;
+import javax.swing.*;
+import java.awt.*;
 import java.io.Serializable;
 /**
  * This class describe the slot for Chess in Chessboard
  * */
-public class Cell implements Serializable {
+public class Cell  implements Serializable {
     // the position for chess
     private ChessPiece piece;
 
+//    private JLabel imageLabel;
 
     public ChessPiece getPiece() {
         return piece;
