@@ -106,10 +106,11 @@ public class ChessboardComponent extends JComponent {
             {
                 // TODO: Implement the initialization checkerboard
 
+                gridComponents[i][j].removeAll();
                 if (grid[i][j].getPiece() != null)
                 {
                     ChessPiece chessPiece = grid[i][j].getPiece();
-                    System.out.println(chessPiece.getOwner());
+//                    System.out.println(chessPiece.getOwner());
                     if (grid[i][j].getPiece().getName()=="Elephant") {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
@@ -170,7 +171,6 @@ public class ChessboardComponent extends JComponent {
                 }
             }
         }
-
     }
 
 
@@ -239,9 +239,6 @@ public class ChessboardComponent extends JComponent {
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (AnimalChessComponent) clickedComponent.getComponents()[0]);
             }
-//            if(gameController.winBlue()){
-////                ChessGameFrame.setBlueWin();
-//            }
         }
     }
 }

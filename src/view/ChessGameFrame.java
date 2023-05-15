@@ -33,7 +33,7 @@ public class ChessGameFrame extends JFrame {
 //        setComponentZOrder(this, 1);
         addChessboard();
         addLabel();
-        addHelloButton();
+//        addResetButton();
         tfCount.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         tfCount.setFont(new Font("Arial", Font.BOLD, 25));
         tfCount.setEditable(false);
@@ -51,6 +51,10 @@ public class ChessGameFrame extends JFrame {
 
     public void setChessboardComponent(ChessboardComponent chessboardComponent) {
         this.chessboardComponent = chessboardComponent;
+    }
+
+    public void  setRounds(int rounds){
+        Rounds = rounds;
     }
 
     /**
@@ -77,7 +81,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addHelloButton() {
+    private void addResetButton() {
         JButton button = new JButton("Reset");
         button.addActionListener((e) -> {
             UIManager.put("OptionPane.yesButtonText", "Yes");
@@ -94,35 +98,6 @@ public class ChessGameFrame extends JFrame {
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
-    }
-
-    public void setBlueWin(){
-        UIManager.put("OptionPane.yesButtonText", "Reset");
-        UIManager.put("OptionPane.noButtonText", "Close");
-        int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION) {
-            this.dispose();
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
-            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(),mainFrame);
-            mainFrame.setVisible(true);
-        }
-        else{
-            this.dispose();
-        }
-    }
-    public void setRedWin(){
-        UIManager.put("OptionPane.yesButtonText", "Reset");
-        UIManager.put("OptionPane.noButtonText", "Close");
-        int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION) {
-            this.dispose();
-            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
-            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(),mainFrame);
-            mainFrame.setVisible(true);
-        }
-        else{
-            this.dispose();
-        }
     }
 //    private void addrounds() {
 //        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));

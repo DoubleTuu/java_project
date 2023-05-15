@@ -27,7 +27,12 @@ public class Chessboard {
         }
     }
 
-    private void initPieces() {
+    public void initPieces() {
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 7; j++) {
+                grid[i][j].setPiece(null);
+            }
+        }
         grid[0][0].setPiece(new ChessPiece(PlayerColor.RED, "Lion",7));
         grid[0][6].setPiece(new ChessPiece(PlayerColor.RED, "Tiger",6));
         grid[1][1].setPiece(new ChessPiece(PlayerColor.RED, "Dog",3));
@@ -93,7 +98,7 @@ public class Chessboard {
     }
 
     public boolean isValidMove(ChessboardPoint src, ChessboardPoint dest) {
-        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
+        ChessboardComponent chessboardComponent = new ChessboardComponent(72);
         if (getChessPieceAt(src) == null || getChessPieceAt(dest) != null) {
             return false;
         }
@@ -151,7 +156,7 @@ public class Chessboard {
 
     public boolean isValidCapture(ChessboardPoint src, ChessboardPoint dest) {
         // TODO:Fix this method
-        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
+        ChessboardComponent chessboardComponent = new ChessboardComponent(72);
         if(getChessPieceAt(src).getOwner()!=getChessPieceAt(dest).getOwner()){
             if (calculateDistance(src, dest) == 1) {
                 if(chessboardComponent.getRiverCell().contains(src) ^ chessboardComponent.getRiverCell().contains(dest)){

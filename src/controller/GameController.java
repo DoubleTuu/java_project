@@ -8,6 +8,9 @@ import model.Chessboard;
 import model.ChessboardPoint;
 import view.*;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * Controller is the connection between model and view,
  * when a Controller receive a request from a view, the Controller
@@ -40,19 +43,36 @@ public class GameController implements GameListener {
 
         view.registerController(this);
         initialize();
-        view.initiateChessComponent(model);
         view.repaint();
+        addResetButton();
     }
     private ChessGameFrame getChessGameFrame(){
         return this.chessGameFrame;
     }
 
-    private void initialize() {
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
-
+    private void addResetButton(){
+        JButton button = new JButton("Reset");
+        button.setLocation(810, 810 / 10 + 120);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        chessGameFrame.add(button);
+        button.addActionListener((e) -> {
+            UIManager.put("OptionPane.yesButtonText", "Yes");
+            UIManager.put("OptionPane.noButtonText", "No");
+            int choice = JOptionPane.showConfirmDialog(chessGameFrame, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                initialize();
             }
-        }
+        });
+    }
+
+    private void initialize() {
+        currentPlayer = PlayerColor.BLUE;
+        model.initPieces();
+        view.initiateChessComponent(model);
+        view.repaint();
+        chessGameFrame.setRounds(1);
+        chessGameFrame.setRounds();
     }
 
     // after a valid move swap the player
@@ -65,7 +85,6 @@ public class GameController implements GameListener {
 
     private boolean winBlue() {
         // TODO: Check the board if there is a winner
-        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
         boolean test = true;
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
@@ -109,7 +128,6 @@ public class GameController implements GameListener {
     }
     private boolean winRed() {
         // TODO: Check the board if there is a winner
-        ChessboardComponent chessboardComponent = new ChessboardComponent(1);
         boolean test = true;
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
@@ -162,13 +180,32 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
+            System.out.println("asfdgsgsag");
             // TODO: if the chess enter Dens or Traps and so on
         }
         if(winBlue()){
-            this.chessGameFrame.setBlueWin();
+            UIManager.put("OptionPane.yesButtonText", "Reset");
+            UIManager.put("OptionPane.noButtonText", "Close");
+            int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                initialize();
+            }
+            else{
+
+            }
+//            this.chessGameFrame.setBlueWin();
         }
         if(winRed()){
-            this.chessGameFrame.setRedWin();
+            UIManager.put("OptionPane.yesButtonText", "Reset");
+            UIManager.put("OptionPane.noButtonText", "Close");
+            int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                initialize();
+            }
+            else{
+
+            }
+//            this.chessGameFrame.setRedWin();
         }
     }
 
@@ -181,6 +218,7 @@ public class GameController implements GameListener {
                 selectedPoint = point;
                 component.setSelected(true);
                 component.repaint();//重新画棋子
+                System.out.println("asd");
             }
         }
         else if (selectedPoint.equals(point))
@@ -198,12 +236,6 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
-        }
-        if(winBlue()){
-            this.chessGameFrame.setBlueWin();
-        }
-        if(winRed()){
-            this.chessGameFrame.setRedWin();
         }
     }
 }

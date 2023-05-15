@@ -21,7 +21,7 @@ public class AnimalChessComponent extends JComponent {
         this.owner = owner;
         this.selected = false;
         this.str = str;
-        setSize(size/2, size/2);
+        setSize(size, size);
         setLocation(0,0);
         setVisible(true);
     }
