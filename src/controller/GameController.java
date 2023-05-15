@@ -180,7 +180,6 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
-            System.out.println("asfdgsgsag");
             // TODO: if the chess enter Dens or Traps and so on
         }
         if(winBlue()){
@@ -191,9 +190,8 @@ public class GameController implements GameListener {
                 initialize();
             }
             else{
-
+                chessGameFrame.dispose();
             }
-//            this.chessGameFrame.setBlueWin();
         }
         if(winRed()){
             UIManager.put("OptionPane.yesButtonText", "Reset");
@@ -203,9 +201,8 @@ public class GameController implements GameListener {
                 initialize();
             }
             else{
-
+                chessGameFrame.dispose();
             }
-//            this.chessGameFrame.setRedWin();
         }
     }
 
