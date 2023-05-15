@@ -26,19 +26,25 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
+    private ChessGameFrame chessGameFrame;
+
 //    public int getGameRounds()
 //    {
 //        return gameRounds;
 //    }
-    public GameController(ChessboardComponent view, Chessboard model) {
+    public GameController(ChessboardComponent view, Chessboard model,ChessGameFrame chessGameFrame) {
         this.view = view;
         this.model = model;
+        this.chessGameFrame = chessGameFrame;
         this.currentPlayer = PlayerColor.BLUE;
 
         view.registerController(this);
         initialize();
         view.initiateChessComponent(model);
         view.repaint();
+    }
+    private ChessGameFrame getChessGameFrame(){
+        return this.chessGameFrame;
     }
 
     private void initialize() {
@@ -158,6 +164,12 @@ public class GameController implements GameListener {
             view.repaint();
             // TODO: if the chess enter Dens or Traps and so on
         }
+        if(winBlue()){
+            this.chessGameFrame.setBlueWin();
+        }
+        if(winRed()){
+            this.chessGameFrame.setRedWin();
+        }
     }
 
     // click a cell with a chess
@@ -186,6 +198,12 @@ public class GameController implements GameListener {
             selectedPoint = null;
             swapColor();
             view.repaint();
+        }
+        if(winBlue()){
+            this.chessGameFrame.setBlueWin();
+        }
+        if(winRed()){
+            this.chessGameFrame.setRedWin();
         }
     }
 }
