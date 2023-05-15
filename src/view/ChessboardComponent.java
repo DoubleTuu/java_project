@@ -239,6 +239,9 @@ public class ChessboardComponent extends JComponent {
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (AnimalChessComponent) clickedComponent.getComponents()[0]);
             }
+//            if(gameController.winBlue()){
+////                ChessGameFrame.setBlueWin();
+//            }
         }
     }
 }

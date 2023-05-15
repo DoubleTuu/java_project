@@ -57,7 +57,7 @@ public class GameController implements GameListener {
         currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
-    public boolean winBlue() {
+    private boolean winBlue() {
         // TODO: Check the board if there is a winner
         ChessboardComponent chessboardComponent = new ChessboardComponent(1);
         boolean test = true;
@@ -101,7 +101,7 @@ public class GameController implements GameListener {
         }
         return test || ( model.getChessPieceAt(new ChessboardPoint(0,3))!=null && model.getChessPieceOwner(new ChessboardPoint(0,3)).equals(PlayerColor.BLUE));
     }
-    public boolean winRed() {
+    private boolean winRed() {
         // TODO: Check the board if there is a winner
         ChessboardComponent chessboardComponent = new ChessboardComponent(1);
         boolean test = true;

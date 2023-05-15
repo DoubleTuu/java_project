@@ -98,12 +98,13 @@ public class Chessboard {
             return false;
         }
         if(calculateDistance(src, dest) == 1) {
-            if(getChessPieceAt(src).getName().equals("Mouse") ) {
-                return true;
-            }
-            else if(!getChessPieceAt(src).getName().equals("Mouse"))
-            {
-                return !chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), dest.getCol()));
+            if( !(getChessPieceOwner(src).equals(PlayerColor.BLUE) & (dest.getRow()==8 & dest.getCol()==3)) &
+                    !(getChessPieceOwner(src).equals(PlayerColor.RED) & (dest.getRow()==0 & dest.getCol()==3))) {
+                if (getChessPieceAt(src).getName().equals("Mouse")) {
+                    return true;
+                } else if (!getChessPieceAt(src).getName().equals("Mouse")) {
+                    return !chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), dest.getCol()));
+                }
             }
         }
         //over the river

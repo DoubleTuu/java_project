@@ -1,5 +1,6 @@
 package view;
 import controller.GameController;
+import model.Chessboard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class ChessGameFrame extends JFrame {
     private static JTextField currentColor = new JTextField("Turn: Blue");
     private ChessboardComponent chessboardComponent;
     public ChessGameFrame(int width, int height) {
-        setTitle("Tu & 3Mker fucking project"); //设置标题
+        setTitle("Welcome To Jungle"); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
         this.ONE_CHESS_SIZE = (HEIGTH * 4 / 5) / 9;
@@ -33,11 +34,11 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addHelloButton();
-        tfCount.setBounds(800, 400, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        tfCount.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         tfCount.setFont(new Font("Arial", Font.BOLD, 25));
         tfCount.setEditable(false);
         add(tfCount);
-        currentColor.setBounds(800, 500, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        currentColor.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         currentColor.setFont(new Font("Arial", Font.BOLD, 25));
         currentColor.setEditable(false);
         currentColor.setForeground(Color.BLUE);
@@ -57,7 +58,7 @@ public class ChessGameFrame extends JFrame {
      */
     private void addChessboard() {
         chessboardComponent = new ChessboardComponent(ONE_CHESS_SIZE);
-        chessboardComponent.setLocation(HEIGTH / 5, HEIGTH / 10);
+        chessboardComponent.setLocation(HEIGTH / 5 + ONE_CHESS_SIZE, HEIGTH / 10);
         add(chessboardComponent);
     }
 
@@ -77,12 +78,37 @@ public class ChessGameFrame extends JFrame {
      */
 
     private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+        JButton button = new JButton("Reset");
+        button.addActionListener((e) -> {
+            UIManager.put("OptionPane.yesButtonText", "Yes");
+            UIManager.put("OptionPane.noButtonText", "No");
+            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                dispose();
+                ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+                GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+                mainFrame.setVisible(true);
+            }
+        });
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
+    }
+
+    public void setBlueWin(){
+        UIManager.put("OptionPane.yesButtonText", "Reset");
+        UIManager.put("OptionPane.noButtonText", "Close");
+        int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            this.dispose();
+            ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
+            GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard());
+            mainFrame.setVisible(true);
+        }
+        else{
+            this.dispose();
+        }
     }
 //    private void addrounds() {
 //        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));
@@ -92,7 +118,7 @@ public class ChessGameFrame extends JFrame {
 //        add(gg);
 //    }
     public static void setRounds(){
-        tfCount.setText("Rounds:"+Rounds + "");
+        tfCount.setText("Rounds:"+Rounds);
         Rounds++;
     }
     public static void setTurn(){
