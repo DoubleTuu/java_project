@@ -11,19 +11,20 @@ import java.awt.*;
 public class CellComponent extends JPanel {
     private Color background;
 
-//    public JLabel label;
+    public JLabel label;
 
-    public CellComponent(Color background, Point location, int size) {
+    public CellComponent(Color background, Point location, int size)
+    {
         setLayout(new GridLayout(1,1));
         setLocation(location);
         setSize(size, size);
         this.background = background;
+//        this.label=null;
 //        label = new JLabel();
 //        label.setHorizontalAlignment(JLabel.CENTER);
 //        label.setVerticalAlignment(JLabel.CENTER);
 //        add(label);
     }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);

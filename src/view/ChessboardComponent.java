@@ -12,11 +12,13 @@ import java.util.*;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
+import static view.ChessGameFrame.*;
 
 /**
  * This class represents the checkerboard component object on the panel
  */
-public class ChessboardComponent extends JComponent {
+public class ChessboardComponent extends JComponent
+{
     private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
@@ -64,12 +66,46 @@ public class ChessboardComponent extends JComponent {
 
         homeRed.add(new ChessboardPoint(0,3));
         homeBlue.add(new ChessboardPoint(8,3));
+
+        ChessGameFrame.ImagePanel imagePanel1 = new ChessGameFrame.ImagePanel();
+        imagePanel1.setBounds(ONE_CHESS_SIZE*4, 1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel1.paintImage(trap1);
+        add(imagePanel1);
+        ChessGameFrame.ImagePanel imagePanel2 = new ChessGameFrame.ImagePanel();
+        imagePanel2.setBounds(ONE_CHESS_SIZE*2, 1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel2.paintImage(trap1);
+        add(imagePanel2);
+        ChessGameFrame.ImagePanel imagePanel3 = new ChessGameFrame.ImagePanel();
+        imagePanel3.setBounds(ONE_CHESS_SIZE*3, ONE_CHESS_SIZE+1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel3.paintImage(trap1);
+        add(imagePanel3);
+        ChessGameFrame.ImagePanel imagePanel4 = new ChessGameFrame.ImagePanel();
+        imagePanel4.setBounds(ONE_CHESS_SIZE*4, ONE_CHESS_SIZE*8-1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel4.paintImage(trap1);
+        add(imagePanel4);
+        ChessGameFrame.ImagePanel imagePanel5 = new ChessGameFrame.ImagePanel();
+        imagePanel5.setBounds(ONE_CHESS_SIZE*2, ONE_CHESS_SIZE*8-1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel5.paintImage(trap1);
+        add(imagePanel5);
+        ChessGameFrame.ImagePanel imagePanel6 = new ChessGameFrame.ImagePanel();
+        imagePanel6.setBounds(ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*7-1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel6.paintImage(trap1);
+        add(imagePanel6);
+
+        ChessGameFrame.ImagePanel imagePanel7 = new ChessGameFrame.ImagePanel();
+        imagePanel7.setBounds(ONE_CHESS_SIZE*3, 1,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel7.paintImage(shouxue1);
+        add(imagePanel7);
+        ChessGameFrame.ImagePanel imagePanel8 = new ChessGameFrame.ImagePanel();
+        imagePanel8.setBounds(ONE_CHESS_SIZE*3,ONE_CHESS_SIZE*8-1 ,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
+        imagePanel8.paintImage(shouxue1);
+        add(imagePanel8);
         for (int i = 0; i < CHESSBOARD_ROW_SIZE.getNum(); i++)
         {
             for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++)
             {
                 ChessboardPoint temp = new ChessboardPoint(i, j);
-                CellComponent cell;
+                CellComponent cell=new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
                 if (riverCell.contains(temp))
                 {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
@@ -78,6 +114,7 @@ public class ChessboardComponent extends JComponent {
                 else if(trapBlue.contains(temp) || trapRed.contains(temp) )
                 {
                     cell = new CellComponent(Color.orange,calculatePoint(i,j),CHESS_SIZE);
+//                    cell.label.setIcon(new ImageIcon("java_project/resource/trap.jpeg"));
                     this.add(cell);
                 }
                 else if(homeBlue.contains(temp) || homeRed.contains(temp))
@@ -223,19 +260,25 @@ public class ChessboardComponent extends JComponent {
 
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
     @Override
-    protected void processMouseEvent(MouseEvent e) {
-        if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+    protected void processMouseEvent(MouseEvent e)
+    {
+        if (e.getID() == MouseEvent.MOUSE_PRESSED)
+        {
             JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
-            if (clickedComponent.getComponentCount() == 0) {
+            if (clickedComponent.getComponentCount() == 0)
+            {
                 System.out.print("None chess here and ");
                 gameController.onPlayerClickCell(getChessboardPoint(e.getPoint()), (CellComponent) clickedComponent);
-            } else {
+            }
+            else
+            {
                 System.out.print("One chess here and ");
                 gameController.onPlayerClickChessPiece(getChessboardPoint(e.getPoint()), (AnimalChessComponent) clickedComponent.getComponents()[0]);
             }
