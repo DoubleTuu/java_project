@@ -8,7 +8,7 @@ import java.awt.*;
  * but this class only cares how to draw Cells on ChessboardComponent
  */
 
-public class CellComponent extends JPanel {
+public class CellComponent extends JComponent {
     private Color background;
 
 //    public JLabel label;

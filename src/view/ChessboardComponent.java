@@ -111,62 +111,135 @@ public class ChessboardComponent extends JComponent {
                 {
                     ChessPiece chessPiece = grid[i][j].getPiece();
 //                    System.out.println(chessPiece.getOwner());
-                    if (grid[i][j].getPiece().getName()=="Elephant") {
+                    if (grid[i][j].getPiece().getName()=="Elephant" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "象"));
+                                        "象",
+                                        new ImageIcon(getClass().getResource("/ElephantBlue.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Lion") {
+                    else if (grid[i][j].getPiece().getName()=="Elephant" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "狮"));
+                                        "象",
+                                        new ImageIcon(getClass().getResource("/ElephantRed.jpg")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Tiger") {
+                    else if (grid[i][j].getPiece().getName()=="Lion" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "虎"));
+                                        "狮",
+                                        new ImageIcon(getClass().getResource("/LionRed.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Leopard") {
+                    else if (grid[i][j].getPiece().getName()=="Lion" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "豹"));
+                                        "狮",
+                                        new ImageIcon(getClass().getResource("/LionBlue.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Wolf") {
+                    else if (grid[i][j].getPiece().getName()=="Tiger" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "狼"));
+                                        "虎",
+                                        new ImageIcon(getClass().getResource("/TigerBlue.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Dog") {
+                    else if (grid[i][j].getPiece().getName()=="Tiger" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "狗"));
+                                        "虎",
+                                        new ImageIcon(getClass().getResource("/TigerRed.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Cat") {
+                    else if (grid[i][j].getPiece().getName()=="Leopard" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "猫"));
+                                        "豹",
+                                        new ImageIcon(getClass().getResource("/LeopardRed.png")).getImage()));
                     }
-                    else if (grid[i][j].getPiece().getName()=="Mouse")
+                    else if (grid[i][j].getPiece().getName()=="Leopard" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "豹",
+                                        new ImageIcon(getClass().getResource("/LeopardBlue.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Wolf" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "狼",
+                                        new ImageIcon(getClass().getResource("/WolfBlue.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Wolf" & chessPiece.getOwner().equals(PlayerColor.RED)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "狼",
+                                        new ImageIcon(getClass().getResource("/WolkRed.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Dog" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "狗",
+                                        new ImageIcon(getClass().getResource("/DogBlue.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Dog" & chessPiece.getOwner().equals(PlayerColor.RED)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "狗",
+                                        new ImageIcon(getClass().getResource("/DogRed.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Cat" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "猫",
+                                        new ImageIcon(getClass().getResource("/CatBlue.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Cat" & chessPiece.getOwner().equals(PlayerColor.RED)) {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "猫",
+                                        new ImageIcon(getClass().getResource("/CatRed.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Mouse" & chessPiece.getOwner().equals(PlayerColor.BLUE))
                     {
                         gridComponents[i][j].add(
                                 new AnimalChessComponent(
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
-                                        "鼠"));
+                                        "鼠",
+                                        new ImageIcon(getClass().getResource("/MouseBlue.png")).getImage()));
+                    }
+                    else if (grid[i][j].getPiece().getName()=="Mouse" & chessPiece.getOwner().equals(PlayerColor.RED))
+                    {
+                        gridComponents[i][j].add(
+                                new AnimalChessComponent(
+                                        chessPiece.getOwner(),
+                                        CHESS_SIZE,
+                                        "鼠",
+                                        new ImageIcon(getClass().getResource("/MouseRed.png")).getImage()));
                     }
                 }
             }

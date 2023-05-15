@@ -16,11 +16,13 @@ public class AnimalChessComponent extends JComponent {
     private boolean selected;
 
     private String str;
+    public Image img ;
 
-    public AnimalChessComponent(PlayerColor owner, int size, String str) {
+    public AnimalChessComponent(PlayerColor owner, int size, String str, Image image) {
         this.owner = owner;
         this.selected = false;
         this.str = str;
+        img = image;
         setSize(size, size);
         setLocation(0,0);
         setVisible(true);
@@ -43,10 +45,16 @@ public class AnimalChessComponent extends JComponent {
         Font font = new Font("楷体", Font.PLAIN, getWidth() / 2);
         g2.setFont(font);
         g2.setColor(owner.getColor());
-        g2.drawString(str, getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
+//        g2.drawString(str, getWidth() / 4, getHeight() * 5 / 8); // FIXME: Use library to find the correct offset.
         if (isSelected()) { // Highlights the model if selected.
             g.setColor(Color.RED);
             g.drawOval(0, 0, getWidth() , getHeight());
+        }
+        try {
+            // Load the image from the resource folder
+            g2.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
