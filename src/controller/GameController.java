@@ -62,6 +62,7 @@ public class GameController implements GameListener {
             int choice = JOptionPane.showConfirmDialog(chessGameFrame, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {
                 initialize();
+                chessGameFrame.setTurn();
             }
         });
     }
