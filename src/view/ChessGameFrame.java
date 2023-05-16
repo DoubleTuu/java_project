@@ -16,7 +16,7 @@ public class ChessGameFrame extends JFrame {
     public static int ONE_CHESS_SIZE;
     private GameController xx;
     public static int Rounds=2;
-    private static JTextField tfCount = new JTextField("Rounds:1");
+    private static JTextField roundsButton = new JTextField("Rounds:1");
     private static JTextField currentColor = new JTextField("Turn: Blue");
 
     public static JLabel trap;
@@ -65,40 +65,10 @@ public class ChessGameFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //设置程序关闭按键，如果点击右上方的叉就游戏全部关闭了
         setLayout(null);
 
-
-//        setComponentZOrder(this, 1);
         addChessboard();
-
-        ImagePanel imagePanel1 = new ImagePanel();
-        imagePanel1.setBounds(ONE_CHESS_SIZE*21/2, ONE_CHESS_SIZE*9/2,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
-        imagePanel1.paintImage(xuebao1);
-        add(imagePanel1);
-//        setVisible(true);
-//        repaint();
-//        ImagePanel imagePanel2 = new ImagePanel();
-//        imagePanel2.setBounds(ONE_CHESS_SIZE*21/2, ONE_CHESS_SIZE*9/2,ONE_CHESS_SIZE,ONE_CHESS_SIZE);
-//        imagePanel2.paintImage(dingzhen1);
-//        add(imagePanel2);
-//        setVisible(true);
-//        repaint();
-//        trap = new JLabel();
-////        trap.setIcon(new ImageIcon("java_project/resource/Elephant-red.png"));
-////        JPanel panel =new JPanel();
-////        panel.add(trap);
-////        add(panel);
-////        setVisible(true);
-
         addLabel();
-//        addResetButton();
-        tfCount.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
-        tfCount.setFont(new Font("Arial", Font.BOLD, 25));
-        tfCount.setEditable(false);
-        add(tfCount);
-        currentColor.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
-        currentColor.setFont(new Font("Arial", Font.BOLD, 25));
-        currentColor.setEditable(false);
-        currentColor.setForeground(Color.BLUE);
-        add(currentColor);
+        addRoundButton();
+        addPlayerButton();
     }
 
     public ChessboardComponent getChessboardComponent() {
@@ -121,6 +91,19 @@ public class ChessGameFrame extends JFrame {
         chessboardComponent.setLocation(HEIGTH / 5 + ONE_CHESS_SIZE, HEIGTH / 10);
         add(chessboardComponent);
     }
+    private void addRoundButton(){
+        roundsButton.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        roundsButton.setFont(new Font("Arial", Font.BOLD, 25));
+        roundsButton.setEditable(false);
+        add(roundsButton);
+    }
+    private void addPlayerButton(){
+        currentColor.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
+        currentColor.setFont(new Font("Arial", Font.BOLD, 25));
+        currentColor.setEditable(false);
+        currentColor.setForeground(Color.BLUE);
+        add(currentColor);
+    }
 
     /**
      * 在游戏面板中添加标签
@@ -137,33 +120,8 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    private void addResetButton() {
-        JButton button = new JButton("Reset");
-        button.addActionListener((e) -> {
-            UIManager.put("OptionPane.yesButtonText", "Yes");
-            UIManager.put("OptionPane.noButtonText", "No");
-            int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
-            if (choice == JOptionPane.YES_OPTION) {
-                dispose();
-                ChessGameFrame mainFrame = new ChessGameFrame(1100, 810);
-                GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(),mainFrame);
-                mainFrame.setVisible(true);
-            }
-        });
-        button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
-    }
-//    private void addrounds() {
-//        JLabel gg = new JLabel("Rounds:"+String.valueOf(Rounds));
-//        gg.setLocation(HEIGTH, HEIGTH / 2);
-//        gg.setSize(200, 60);
-//        gg.setFont(new Font("Rockwell", Font.BOLD, 20));
-//        add(gg);
-//    }
     public static void setRounds(){
-        tfCount.setText("Rounds:"+Rounds);
+        roundsButton.setText("Rounds:"+Rounds);
         Rounds++;
     }
     public static void setTurn(){

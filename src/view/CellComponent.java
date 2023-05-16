@@ -11,7 +11,6 @@ import java.awt.*;
 public class CellComponent extends JComponent {
     private Color background;
 
-    public JLabel label;
 
     public CellComponent(Color background, Point location, int size)
     {
@@ -19,11 +18,6 @@ public class CellComponent extends JComponent {
         setLocation(location);
         setSize(size, size);
         this.background = background;
-//        this.label=null;
-//        label = new JLabel();
-//        label.setHorizontalAlignment(JLabel.CENTER);
-//        label.setVerticalAlignment(JLabel.CENTER);
-//        add(label);
     }
     @Override
     protected void paintComponent(Graphics g) {
@@ -31,8 +25,4 @@ public class CellComponent extends JComponent {
         g.setColor(background);
         g.fillRect(1, 1, this.getWidth()-1, this.getHeight()-1);
     }
-//    public void setText(String text)
-//    {
-//        label.setText(text);
-//    }
 }
