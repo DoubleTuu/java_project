@@ -24,6 +24,8 @@ public class GameController implements GameListener {
     private ChessboardComponent view;
     private PlayerColor currentPlayer;
 
+    public static JButton button;
+
 //    public int gameRounds=1;
 
     // Record whether there is a selected piece before
@@ -43,8 +45,9 @@ public class GameController implements GameListener {
 
         view.registerController(this);
         initialize();
-        view.repaint();
+
         addResetButton();
+        view.repaint();
     }
     private ChessGameFrame getChessGameFrame(){
         return this.chessGameFrame;
@@ -52,11 +55,12 @@ public class GameController implements GameListener {
 
     private void addResetButton()
     {
-        JButton button = new JButton("Reset");
+        button = new JButton("Reset");
         button.setLocation(810, 810 / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         chessGameFrame.add(button);
+        button.setVisible(false);
         button.addActionListener((e) ->
         {
             UIManager.put("OptionPane.yesButtonText", "Yes");
@@ -77,7 +81,6 @@ public class GameController implements GameListener {
         view.repaint();
         chessGameFrame.setRounds(1);
         chessGameFrame.setRounds();
-        chessGameFrame.setTurn();
 //        System.out.println(currentPlayer);
     }
 

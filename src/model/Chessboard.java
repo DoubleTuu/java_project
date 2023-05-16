@@ -1,9 +1,13 @@
 package model;
 
 import view.ChessboardComponent;
-
+import model.Save_and_Load.*;
 import javax.swing.*;
 import java.awt.*;
+
+import static model.Save_and_Load.addarchive_num;
+import static model.Save_and_Load.getrank;
+
 /**
  * This class store the real chess information.
  * The Chessboard has 9*7 cells, and each cell has a position for chess
@@ -11,25 +15,37 @@ import java.awt.*;
 public class Chessboard {
     private Cell[][] grid;
 
-    public Chessboard() {
-        this.grid =
-                new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
-
+    public Chessboard()
+    {
+        this.grid = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
         initGrid();
         initPieces();
     }
-
-    private void initGrid() {
-        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
-            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
+    public Chessboard Chessboard()
+    {
+        Save_and_Load.work();
+        this.grid = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
+        initGrid();
+        initPiecesload();
+        return this;
+    }
+    private void initGrid()
+    {
+        for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++)
+        {
+            for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++)
+            {
                 grid[i][j] = new Cell();
             }
         }
     }
 
-    public void initPieces() {
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 7; j++) {
+    public void initPieces()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
                 grid[i][j].setPiece(null);
             }
         }
@@ -52,6 +68,20 @@ public class Chessboard {
         grid[6][6].setPiece(new ChessPiece(PlayerColor.BLUE, "Mouse",1));
     }
 
+    public void initPiecesload()
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                grid[i][j].setPiece(null);
+            }
+        }
+        for(int i=0;i<16;i++)
+        {
+            grid[Save_and_Load.row[i]][Save_and_Load.col[i]].setPiece(new ChessPiece(Save_and_Load.getowner(i)=="Red"?PlayerColor.RED:PlayerColor.BLUE,Save_and_Load.name[i],getrank(Save_and_Load.name[i])));
+        }
+    }
     public ChessPiece getChessPieceAt(ChessboardPoint point) {
         return getGridAt(point).getPiece();
     }
