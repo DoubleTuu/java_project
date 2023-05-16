@@ -50,29 +50,34 @@ public class GameController implements GameListener {
         return this.chessGameFrame;
     }
 
-    private void addResetButton(){
+    private void addResetButton()
+    {
         JButton button = new JButton("Reset");
         button.setLocation(810, 810 / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         chessGameFrame.add(button);
-        button.addActionListener((e) -> {
+        button.addActionListener((e) ->
+        {
             UIManager.put("OptionPane.yesButtonText", "Yes");
             UIManager.put("OptionPane.noButtonText", "No");
             int choice = JOptionPane.showConfirmDialog(chessGameFrame, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
-            if (choice == JOptionPane.YES_OPTION) {
+            if (choice == JOptionPane.YES_OPTION)
+            {
                 initialize();
             }
         });
     }
 
-    private void initialize() {
+    public void initialize() {
         currentPlayer = PlayerColor.BLUE;
         model.initPieces();
         view.initiateChessComponent(model);
         view.repaint();
         chessGameFrame.setRounds(1);
         chessGameFrame.setRounds();
+        chessGameFrame.setTurn();
+//        System.out.println(currentPlayer);
     }
 
     // after a valid move swap the player

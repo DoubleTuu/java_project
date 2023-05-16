@@ -80,14 +80,11 @@ public class ChessboardComponent extends JComponent
                 else if(trapBlue.contains(temp) || trapRed.contains(temp) )
                 {
                     cell = new CellComponent(Color.orange,calculatePoint(i,j),CHESS_SIZE);
-//                    cell.label.setIcon(new ImageIcon("java_project/resource/trap.jpeg"));
                     this.add(cell);
                 }
                 else if(homeBlue.contains(temp) || homeRed.contains(temp))
                 {
                     cell = new CellComponent(Color.PINK,calculatePoint(i,j),CHESS_SIZE);
-//                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
-//                    cell.image.setIcon(icon);
                     this.add(cell);
                 }
                 else
@@ -308,6 +305,7 @@ public class ChessboardComponent extends JComponent
     @Override
     protected void processMouseEvent(MouseEvent e)
     {
+        repaint();
         if (e.getID() == MouseEvent.MOUSE_PRESSED)
         {
             JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());

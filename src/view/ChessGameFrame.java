@@ -86,18 +86,23 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中添加棋盘
      */
-    private void addChessboard() {
+    private void addChessboard()
+    {
         chessboardComponent = new ChessboardComponent(ONE_CHESS_SIZE);
         chessboardComponent.setLocation(HEIGTH / 5 + ONE_CHESS_SIZE, HEIGTH / 10);
         add(chessboardComponent);
     }
-    private void addRoundButton(){
+
+
+    private void addRoundButton()
+    {
         roundsButton.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         roundsButton.setFont(new Font("Arial", Font.BOLD, 25));
         roundsButton.setEditable(false);
         add(roundsButton);
     }
-    private void addPlayerButton(){
+    private void addPlayerButton()
+    {
         currentColor.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         currentColor.setFont(new Font("Arial", Font.BOLD, 25));
         currentColor.setEditable(false);
@@ -120,17 +125,20 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
      */
 
-    public static void setRounds(){
+    public static void setRounds()
+    {
         roundsButton.setText("Rounds:"+Rounds);
         Rounds++;
     }
-    public static void setTurn(){
+    public static void setTurn()
+    {
         if(currentColor.getText().equals("Turn: Blue"))
         {
             currentColor.setText("Turn: Red");
             currentColor.setForeground(Color.RED);
         }
-        else{
+        else
+        {
             currentColor.setText("Turn: Blue");
             currentColor.setForeground(Color.BLUE);
         }
