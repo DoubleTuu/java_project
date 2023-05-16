@@ -19,41 +19,8 @@ public class ChessGameFrame extends JFrame {
     private static JTextField roundsButton = new JTextField("Rounds:1");
     private static JTextField currentColor = new JTextField("Turn: Blue");
 
-    public static JLabel trap;
-
-    public static Image xuebao1=  Toolkit.getDefaultToolkit().getImage("java_project/resource/xuebao.jpeg");
-    public static Image trap1=  Toolkit.getDefaultToolkit().getImage("java_project/resource/trap.jpeg");
-    public static Image shouxue1=  Toolkit.getDefaultToolkit().getImage("java_project/resource/shouxue.png");
-    public static Image dingzhen1=  Toolkit.getDefaultToolkit().getImage("java_project/resource/dingzhen.png");
-//    Image trap1 = null;
     private ChessboardComponent chessboardComponent;
 
-    static class ImagePanel extends JPanel
-    {
-        private Image image = null;
-
-        public void paintImage(Image image)
-        {
-            this.image = image;
-            this.repaint();
-        }
-        @Override
-        public void paintComponent(Graphics g)
-        {
-            super.paintComponent(g);
-            if (image == null)
-            {
-                System.out.println("Image is null");
-            }
-            else
-            {
-                System.out.println("Image width: " + image.getWidth(null) + ", height: " + image.getHeight(null));
-                System.out.println(this.getWidth());
-                g.drawImage(image,0 , 0, this.getWidth(), this.getHeight(), null);
-                setVisible(true);
-            }
-        }
-    }
     public ChessGameFrame(int width, int height) {
         setTitle("Welcome To Jungle"); //设置标题
         this.WIDTH = width;

@@ -71,7 +71,7 @@ public class ChessboardComponent extends JComponent
             for (int j = 0; j < CHESSBOARD_COL_SIZE.getNum(); j++)
             {
                 ChessboardPoint temp = new ChessboardPoint(i, j);
-                CellComponent cell=new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+                CellComponent cell;
                 if (riverCell.contains(temp))
                 {
                     cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
