@@ -141,7 +141,7 @@ public class ChessboardComponent extends JComponent
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "象",
-                                        new ImageIcon(getClass().getResource("/ElephantRed.jpg")).getImage()));
+                                        new ImageIcon(getClass().getResource("/ElephantRed.png")).getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Lion" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(

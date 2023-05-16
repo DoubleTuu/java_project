@@ -65,7 +65,7 @@ public class GameController implements GameListener {
             if (choice == JOptionPane.YES_OPTION)
             {
                 initialize();
-                chessGameFrame.setTurn();
+                chessGameFrame.initTurn();
             }
         });
     }
