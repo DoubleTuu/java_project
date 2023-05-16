@@ -74,30 +74,43 @@ public class ChessboardComponent extends JComponent
                 CellComponent cell;
                 if (riverCell.contains(temp))
                 {
-                    cell = new CellComponent(Color.CYAN, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent(new ImageIcon(getClass().getResource("/River.png")).getImage(),
+                            j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);
                 }
                 else if(trapBlue.contains(temp) || trapRed.contains(temp) )
                 {
-                    cell = new CellComponent(Color.orange,calculatePoint(i,j),CHESS_SIZE);
+                    cell = new CellComponent(new ImageIcon(getClass().getResource("/Trap.png")).getImage(),
+                            j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
 //                    cell.label.setIcon(new ImageIcon("java_project/resource/trap.jpeg"));
                     this.add(cell);
                 }
-                else if(homeBlue.contains(temp) || homeRed.contains(temp))
+                else if(homeRed.contains(temp))
                 {
-                    cell = new CellComponent(Color.PINK,calculatePoint(i,j),CHESS_SIZE);
+                    cell = new CellComponent(new ImageIcon(getClass().getResource("/HomeRed.png")).getImage(),
+                            j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
+//                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
+//                    cell.image.setIcon(icon);
+                    this.add(cell);
+                }
+                else if(homeBlue.contains(temp))
+                {
+                    cell = new CellComponent(new ImageIcon(getClass().getResource("/HomeBlue.png")).getImage(),
+                            j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
 //                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
 //                    cell.image.setIcon(icon);
                     this.add(cell);
                 }
                 else
                 {
-                    cell = new CellComponent(Color.white, calculatePoint(i, j), CHESS_SIZE);
+                    cell = new CellComponent(new ImageIcon(getClass().getResource("/Normal.png")).getImage(),
+                            j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);
                 }
                 gridComponents[i][j] = cell;
             }
         }
+
     }
 
     public void initiateChessComponent(Chessboard chessboard)

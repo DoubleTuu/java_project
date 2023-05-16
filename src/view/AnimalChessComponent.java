@@ -23,7 +23,7 @@ public class AnimalChessComponent extends JComponent {
         this.selected = false;
         this.str = str;
         img = image;
-        setSize(size, size);
+        setSize(size-6, size-6);
         setLocation(0,0);
         setVisible(true);
     }
