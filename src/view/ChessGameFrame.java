@@ -102,6 +102,10 @@ public class ChessGameFrame extends JFrame {
             currentColor.setForeground(Color.BLUE);
         }
     }
+    public static void initTurn(){
+        currentColor.setText("Turn: Blue");
+        currentColor.setForeground(Color.BLUE);
+    }
 
 
 //    private void addLoadButton() {
