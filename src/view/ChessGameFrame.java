@@ -25,7 +25,7 @@ public class ChessGameFrame extends JFrame {
     public Clip clip;
     private static JTextField roundsButton = new JTextField("Rounds:1");
     private static JTextField currentColor = new JTextField("Turn: Blue");
-    BackgroundPanel menubackGround = new BackgroundPanel(new ImageIcon("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\background.jpg").getImage());
+    BackgroundPanel menubackGround = new BackgroundPanel(new ImageIcon("resource\\background.jpg").getImage());
     private ChessboardComponent chessboardComponent;
 
 //    private static JLabel blackScoreLabel = new JLabel();
@@ -45,7 +45,7 @@ public class ChessGameFrame extends JFrame {
         {
               try
               {
-                   File musicPath = new File("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\music\\Travelers encore.wav");
+                   File musicPath = new File("resource\\music\\Travelers encore.wav");
                    AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                    clip = AudioSystem.getClip();
                    clip.open(audioInput);
@@ -187,7 +187,7 @@ public class ChessGameFrame extends JFrame {
     {
         JLabel bg = new JLabel();
         bg.setBounds(0,0,1100,810);
-        ImageIcon icon = new ImageIcon("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\background3.jpg");
+        ImageIcon icon = new ImageIcon("resource\\background3.jpg");
         Image img = icon.getImage().getScaledInstance(bg.getWidth(), bg.getHeight(), Image.SCALE_SMOOTH);
         bg.setIcon(new ImageIcon(img));
         this.getLayeredPane().add(bg,Integer.valueOf(Integer.MIN_VALUE));
