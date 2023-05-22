@@ -104,22 +104,22 @@ public class ChessboardComponent extends JLabel
                 CellComponent cell;
                 if (riverCell.contains(temp))
                 {
-                    Image shit =new ImageIcon(getClass().getResource("/River.png")).getImage();
+                    Image shit =new ImageIcon("resource\\River.png").getImage();
 //                    System.out.println("shit"+shit.getWidth());
-                    cell = new CellComponent(new ImageIcon(getClass().getResource("/River.png")).getImage(),
+                    cell = new CellComponent(new ImageIcon("resource\\River.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);
                 }
                 else if(trapBlue.contains(temp) || trapRed.contains(temp) )
                 {
-                    cell = new CellComponent(new ImageIcon(getClass().getResource("/Trap.png")).getImage(),
+                    cell = new CellComponent(new ImageIcon("resource\\Trap.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
 //                    cell.label.setIcon(new ImageIcon("java_project/resource/trap.jpeg"));
                     this.add(cell);
                 }
                 else if(homeRed.contains(temp))
                 {
-                    cell = new CellComponent(new ImageIcon(getClass().getResource("/HomeRed.png")).getImage(),
+                    cell = new CellComponent(new ImageIcon("resource\\HomeRed.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
 //                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
 //                    cell.image.setIcon(icon);
@@ -127,7 +127,7 @@ public class ChessboardComponent extends JLabel
                 }
                 else if(homeBlue.contains(temp))
                 {
-                    cell = new CellComponent(new ImageIcon(getClass().getResource("/HomeBlue.png")).getImage(),
+                    cell = new CellComponent(new ImageIcon("resource\\HomeBlue.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
 //                    ImageIcon icon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Elephant-red.png")));
 //                    cell.image.setIcon(icon);
@@ -135,7 +135,7 @@ public class ChessboardComponent extends JLabel
                 }
                 else
                 {
-                    cell = new CellComponent(new ImageIcon(getClass().getResource("/Normal.png")).getImage(),
+                    cell = new CellComponent(new ImageIcon("resource\\Normal.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);
                 }
@@ -165,7 +165,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "象",
-                                        new ImageIcon(getClass().getResource("/ElephantBlue.png")).getImage()));
+                                        new ImageIcon("resource\\ElephantBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Elephant" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -173,7 +173,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "象",
-                                        new ImageIcon(getClass().getResource("/ElephantRed.png")).getImage()));
+                                        new ImageIcon("resource\\ElephantRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Lion" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -181,7 +181,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狮",
-                                        new ImageIcon(getClass().getResource("/LionRed.png")).getImage()));
+                                        new ImageIcon("resource\\LionRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Lion" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -189,7 +189,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狮",
-                                        new ImageIcon(getClass().getResource("/LionBlue.png")).getImage()));
+                                        new ImageIcon("resource\\LionBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Tiger" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -197,7 +197,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "虎",
-                                        new ImageIcon(getClass().getResource("/TigerBlue.png")).getImage()));
+                                        new ImageIcon("resource\\TigerBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Tiger" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -205,7 +205,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "虎",
-                                        new ImageIcon(getClass().getResource("/TigerRed.png")).getImage()));
+                                        new ImageIcon("resource\\/TigerRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Leopard" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -213,7 +213,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "豹",
-                                        new ImageIcon(getClass().getResource("/LeopardRed.png")).getImage()));
+                                        new ImageIcon("resource\\LeopardRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Leopard" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -221,7 +221,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "豹",
-                                        new ImageIcon(getClass().getResource("/LeopardBlue.png")).getImage()));
+                                        new ImageIcon("resource\\LeopardBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Wolf" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -229,7 +229,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狼",
-                                        new ImageIcon(getClass().getResource("/WolfBlue.png")).getImage()));
+                                        new ImageIcon("resource\\WolfBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Wolf" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -237,7 +237,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狼",
-                                        new ImageIcon(getClass().getResource("/WolkRed.png")).getImage()));
+                                        new ImageIcon("resource\\WolkRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Dog" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -245,7 +245,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狗",
-                                        new ImageIcon(getClass().getResource("/DogBlue.png")).getImage()));
+                                        new ImageIcon("resource\\DogBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Dog" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -253,7 +253,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "狗",
-                                        new ImageIcon(getClass().getResource("/DogRed.png")).getImage()));
+                                        new ImageIcon("resource\\DogRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Cat" & chessPiece.getOwner().equals(PlayerColor.BLUE)) {
                         gridComponents[i][j].add(
@@ -261,7 +261,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "猫",
-                                        new ImageIcon(getClass().getResource("/CatBlue.png")).getImage()));
+                                        new ImageIcon("resource\\CatBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Cat" & chessPiece.getOwner().equals(PlayerColor.RED)) {
                         gridComponents[i][j].add(
@@ -269,7 +269,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "猫",
-                                        new ImageIcon(getClass().getResource("/CatRed.png")).getImage()));
+                                        new ImageIcon("resource\\CatRed.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Mouse" & chessPiece.getOwner().equals(PlayerColor.BLUE))
                     {
@@ -278,7 +278,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "鼠",
-                                        new ImageIcon(getClass().getResource("/MouseBlue.png")).getImage()));
+                                        new ImageIcon("resource\\MouseBlue.png").getImage()));
                     }
                     else if (grid[i][j].getPiece().getName()=="Mouse" & chessPiece.getOwner().equals(PlayerColor.RED))
                     {
@@ -287,7 +287,7 @@ public class ChessboardComponent extends JLabel
                                         chessPiece.getOwner(),
                                         CHESS_SIZE,
                                         "鼠",
-                                        new ImageIcon(getClass().getResource("/MouseRed.png")).getImage()));
+                                        new ImageIcon("resource\\MouseRed.png").getImage()));
                     }
                 }
             }
