@@ -13,7 +13,7 @@ import static model.Save_and_Load.getrank;
  * The Chessboard has 9*7 cells, and each cell has a position for chess
  */
 public class Chessboard {
-    private Cell[][] grid;
+    public Cell[][] grid;
 
     public Chessboard()
     {
@@ -21,14 +21,14 @@ public class Chessboard {
         initGrid();
         initPieces();
     }
-    public Chessboard Chessboard()
-    {
-        Save_and_Load.work();
-        this.grid = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
-        initGrid();
-        initPiecesload();
-        return this;
-    }
+//    public Chessboard Chessboard()
+//    {
+//        Save_and_Load.work();
+//        this.grid = new Cell[Constant.CHESSBOARD_ROW_SIZE.getNum()][Constant.CHESSBOARD_COL_SIZE.getNum()];//19X19
+//        initGrid();
+//        initPiecesload();
+//        return this;
+//    }
     private void initGrid()
     {
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++)
@@ -94,20 +94,20 @@ public class Chessboard {
         return Math.abs(src.getRow() - dest.getRow()) + Math.abs(src.getCol() - dest.getCol());
     }
 
-    private ChessPiece removeChessPiece(ChessboardPoint point) {
+    public ChessPiece removeChessPiece(ChessboardPoint point) {
         ChessPiece chessPiece = getChessPieceAt(point);
         getGridAt(point).removePiece();
         return chessPiece;
     }
 
-    private void setChessPiece(ChessboardPoint point, ChessPiece chessPiece) {
+    public void setChessPiece(ChessboardPoint point, ChessPiece chessPiece) {
         getGridAt(point).setPiece(chessPiece);
     }
 
     public void moveChessPiece(ChessboardPoint src, ChessboardPoint dest) {
-        if (!isValidMove(src, dest)) {
-            throw new IllegalArgumentException("Illegal chess move!");
-        }
+//        if (!isValidMove(src, dest)) {
+//            throw new IllegalArgumentException("Illegal chess move!");
+//        }
         setChessPiece(dest, removeChessPiece(src));
     }
 

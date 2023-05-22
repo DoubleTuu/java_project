@@ -2,8 +2,13 @@ package view;
 import controller.GameController;
 import model.Chessboard;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.lang.reflect.MalformedParametersException;
 
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
@@ -16,9 +21,11 @@ public class ChessGameFrame extends JFrame {
     public static int ONE_CHESS_SIZE;
     private GameController xx;
     public static int Rounds=2;
+    public static int musictimes=0;
+    public Clip clip;
     private static JTextField roundsButton = new JTextField("Rounds:1");
     private static JTextField currentColor = new JTextField("Turn: Blue");
-    BackgroundPanel backGround = new BackgroundPanel(new ImageIcon("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\background.jpg").getImage());
+    BackgroundPanel menubackGround = new BackgroundPanel(new ImageIcon("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\background.jpg").getImage());
     private ChessboardComponent chessboardComponent;
 
 //    private static JLabel blackScoreLabel = new JLabel();
@@ -34,28 +41,44 @@ public class ChessGameFrame extends JFrame {
         setLayout(null);
         initiailUI();
     }
-//    private void addResetButton()
-//    {
-//        JButton button = new JButton("Reset");
-//        button.setLocation(810, 810 / 10 + 120);
-//        button.setSize(200, 60);
-//        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-//        chessGameFrame.add(button);
-//        button.addActionListener((e) ->
-//        {
-//            UIManager.put("OptionPane.yesButtonText", "Yes");
-//            UIManager.put("OptionPane.noButtonText", "No");
-//            int choice = JOptionPane.showConfirmDialog(chessGameFrame, "Are you sure you want to reset?", "Reset", JOptionPane.YES_NO_OPTION);
-//            if (choice == JOptionPane.YES_OPTION)
-//            {
-//                initialize();
-//                chessGameFrame.setTurn();
-//            }
-//        });
-//    }
+        public void addMusic() throws MalformedParametersException
+        {
+              try
+              {
+                   File musicPath = new File("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\music\\Travelers encore.wav");
+                   AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+                   clip = AudioSystem.getClip();
+                   clip.open(audioInput);
+                   clip.start();
+                   clip.loop(Clip.LOOP_CONTINUOUSLY);
+              }
+             catch(Exception ex)
+             {
+                 System.out.println("Error with playing sound.");
+                    ex.printStackTrace();
+             }
+        }
+    public void addclassicModeButton()
+    {
+        JButton classicModeButton = new JButton("经典模式");
+        classicModeButton.setLocation(810, 810/10 );
+        classicModeButton.setSize(200, 60);
+        classicModeButton.setBackground(new Color(245, 226, 178));
+        classicModeButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        classicModeButton.setBorderPainted(false);
+        add(classicModeButton);
+        classicModeButton.addActionListener(e ->
+        {
+            repaint();
+            dispose();
+            new ChessGameFrame(1024, 1024);
+        });
+    }
     public void initiailUI()
     {
-        setBackground();
+        setmenuBackground();
+
+//        JButton functionbutton = new JButton("功能");
 
         JButton classicModeButton = new JButton("经典模式");
         classicModeButton.setLocation(810, 810/10 );
@@ -65,6 +88,7 @@ public class ChessGameFrame extends JFrame {
         classicModeButton.setBorderPainted(false);
         add(classicModeButton);
 
+
         JButton exitButton = new JButton("退出");
         exitButton.setLocation(810, 810 / 10*3);
         exitButton.setSize(200, 60);
@@ -73,6 +97,15 @@ public class ChessGameFrame extends JFrame {
         exitButton.setVisible(true);
         exitButton.setBorderPainted(false);
         add(exitButton);
+
+        JButton musicButton = new JButton("音乐");
+        musicButton.setLocation(810, 810 / 10*2);
+        musicButton.setSize(200, 60);
+        musicButton.setBackground(new Color(245, 226, 178));
+        musicButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        musicButton.setVisible(true);
+        musicButton.setBorderPainted(false);
+        add(musicButton);
         exitButton.addActionListener(e ->
         {
             repaint();
@@ -83,13 +116,48 @@ public class ChessGameFrame extends JFrame {
         classicModeButton.addActionListener(e ->
         {
             System.out.println("Start Classic Mode");
-            remove(backGround);remove(classicModeButton);
+            remove(menubackGround);
+            remove(classicModeButton);
             remove(exitButton);
+            remove(musicButton);
+            GameController.functionbutton.setVisible(true);
             repaint();
             classicMode();
             repaint();
         });
+        musicButton.addActionListener(e ->
+        {
+            try {
+                musictimes++;
+                if(musictimes%2==1)
+                {
+                    addMusic();
+                }
+                else
+                {
+                    clip.stop();
+                }
+            } catch (MalformedParametersException malformedParametersException) {
+                malformedParametersException.printStackTrace();
+            }
+        });
         addChessboard();
+        addChessboardbackground();
+        //addMenuButton
+
+//        functionbutton.setLocation(810, 810 / 10*3);
+//        functionbutton.setSize(100, 60);
+//        functionbutton.setBackground(new Color(246, 245, 238));
+//        functionbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
+//        functionbutton.setVisible(true);
+//        add(functionbutton);
+//        functionbutton.setVisible(false);
+//        functionbutton.addActionListener(e ->//底下两个button没了！！！
+//        {
+//            MenuFrame menuFrame = new MenuFrame(chessboardComponent);
+//            menuFrame.setVisible(true);
+//        });
+
     }
     public ChessboardComponent getChessboardComponent() //存档要用
     {
@@ -104,16 +172,27 @@ public class ChessGameFrame extends JFrame {
     {
 //        GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(), mainFrame);
         GameController.button.setVisible(true);
-        addLabel();
-        addRoundButton();
-        addPlayerButton();
+        addLabel();//欢迎来到斗兽棋
+        addRoundButton();//rounds
+        addPlayerButton();//who turn
     }
-    public void setBackground()
+    public void setmenuBackground()
     {
 
         Container ct = this.getContentPane();
-        backGround.setBounds(0,0,1100,810);
-        ct.add(backGround);
+        menubackGround.setBounds(0,0,1100,810);
+        ct.add(menubackGround);
+    }
+    public void addChessboardbackground()
+    {
+        JLabel bg = new JLabel();
+        bg.setBounds(0,0,1100,810);
+        ImageIcon icon = new ImageIcon("C:\\Users\\戴尔\\Desktop\\java_project\\resource\\background3.jpg");
+        Image img = icon.getImage().getScaledInstance(bg.getWidth(), bg.getHeight(), Image.SCALE_SMOOTH);
+        bg.setIcon(new ImageIcon(img));
+        this.getLayeredPane().add(bg,Integer.valueOf(Integer.MIN_VALUE));
+        this.add(bg);
+        bg.setVisible(true);
     }
     public void  setRounds(int rounds){
         Rounds = rounds;
@@ -136,6 +215,7 @@ public class ChessGameFrame extends JFrame {
         roundsButton.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         roundsButton.setFont(new Font("Arial", Font.BOLD, 25));
         roundsButton.setEditable(false);
+        roundsButton.setVisible(true);
         add(roundsButton);
     }
     private void addPlayerButton()
@@ -144,6 +224,7 @@ public class ChessGameFrame extends JFrame {
         currentColor.setFont(new Font("Arial", Font.BOLD, 25));
         currentColor.setEditable(false);
         currentColor.setForeground(Color.BLUE);
+        currentColor.setVisible(true);
         add(currentColor);
     }
 

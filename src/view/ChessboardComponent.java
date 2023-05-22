@@ -17,9 +17,9 @@ import static view.ChessGameFrame.*;
 /**
  * This class represents the checkerboard component object on the panel
  */
-public class ChessboardComponent extends JComponent
+public class ChessboardComponent extends JLabel
 {
-    private final CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
+    public CellComponent[][] gridComponents = new CellComponent[CHESSBOARD_ROW_SIZE.getNum()][CHESSBOARD_COL_SIZE.getNum()];
     private final int CHESS_SIZE;
     private final Set<ChessboardPoint> riverCell = new HashSet<>();
     private final Set<ChessboardPoint> trapBlue = new HashSet<>();
@@ -28,18 +28,48 @@ public class ChessboardComponent extends JComponent
     private final Set<ChessboardPoint> homeRed = new HashSet<>();
     private GameController gameController;
 
+    public Stack<RegretNode> regretStack = new Stack<>();
     public ChessboardComponent(int chessSize) {
+        this.setOpaque(false);
+        this.setLayout(null);
         CHESS_SIZE = chessSize;
         int width = CHESS_SIZE * 7;
         int height = CHESS_SIZE * 9;
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);// Allow mouse events to occur
-        setLayout(null); // Use absolute layout.
+//        setLayout(null); // Use absolute layout.
         setSize(width, height);
 //        System.out.printf("chessboard width, height = [%d : %d], chess size = %d\n", width, height, CHESS_SIZE);
-
+        this.setVisible(true);
         initiateGridComponents();
     }
-
+    public void regret(Chessboard chessboard)
+    {
+        if(regretStack.isEmpty())
+        {
+            new ErrorFrame("6");
+        }
+        else
+        {
+            RegretNode regretNode = regretStack.pop();
+            if(regretNode.type==1)//移动
+            {
+                chessboard.moveChessPiece(regretNode.chessboardPoint2,regretNode.chessboardPoint1);
+                setChessComponentAtGrid(regretNode.chessboardPoint1, removeChessComponentAtGrid(regretNode.chessboardPoint2));
+                repaint();
+            }
+            else//吃子
+            {
+                chessboard.removeChessPiece(regretNode.chessboardPoint1);
+                chessboard.removeChessPiece(regretNode.chessboardPoint2);
+                chessboard.setChessPiece(regretNode.chessboardPoint1,regretNode.chessPiece1);
+                chessboard.setChessPiece(regretNode.chessboardPoint2,regretNode.chessPiece2);
+                AnimalChessComponent c2= removeChessComponentAtGrid(regretNode.chessboardPoint2);
+                setChessComponentAtGrid(regretNode.chessboardPoint1,c2);
+                setChessComponentAtGrid(regretNode.chessboardPoint2,regretNode.chessComponent2);
+                repaint();
+            }
+        }
+    }
     public void initiateGridComponents() {
 
         riverCell.add(new ChessboardPoint(3,1));
@@ -74,6 +104,8 @@ public class ChessboardComponent extends JComponent
                 CellComponent cell;
                 if (riverCell.contains(temp))
                 {
+                    Image shit =new ImageIcon(getClass().getResource("/River.png")).getImage();
+//                    System.out.println("shit"+shit.getWidth());
                     cell = new CellComponent(new ImageIcon(getClass().getResource("/River.png")).getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);
@@ -262,8 +294,6 @@ public class ChessboardComponent extends JComponent
         }
     }
 
-
-
     public void registerController(GameController gameController)
     {
         this.gameController = gameController;
@@ -276,6 +306,7 @@ public class ChessboardComponent extends JComponent
 
     public AnimalChessComponent removeChessComponentAtGrid(ChessboardPoint point) {
         // Note re-validation is required after remove / removeAll.
+//        System.out.println("remove");
         AnimalChessComponent chess=(AnimalChessComponent) getGridComponentAt(point).getComponents()[0];
         getGridComponentAt(point).removeAll();
         getGridComponentAt(point).revalidate();

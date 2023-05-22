@@ -2,14 +2,14 @@ package controller;
 
 
 import listener.GameListener;
-import model.Constant;
-import model.PlayerColor;
-import model.Chessboard;
-import model.ChessboardPoint;
+import model.*;
 import view.*;
-
+import view.SaveAndLoadFrame;
 import javax.swing.*;
 import java.awt.*;
+import java.util.Stack;
+
+import static view.SaveAndLoadFrame.ans;
 
 /**
  * Controller is the connection between model and view,
@@ -20,9 +20,10 @@ import java.awt.*;
 */
 public class GameController implements GameListener {
 
-    private Chessboard model;
-    private ChessboardComponent view;
-    private PlayerColor currentPlayer;
+    public static int cheat=0;
+    public Chessboard model;
+    public ChessboardComponent view;
+    public PlayerColor currentPlayer;
 
     public static JButton button;
 
@@ -31,33 +32,55 @@ public class GameController implements GameListener {
     // Record whether there is a selected piece before
     private ChessboardPoint selectedPoint;
 
-    private ChessGameFrame chessGameFrame;
+    public ChessGameFrame chessGameFrame;
+    public static JButton functionbutton = new JButton("function");
 
+//    public static Stack<RegretNode> regretStack = new Stack<>();
 //    public int getGameRounds()
 //    {
 //        return gameRounds;
 //    }
     public GameController(ChessboardComponent view, Chessboard model,ChessGameFrame chessGameFrame) {
+//        ans.append("9 7 ");
         this.view = view;
         this.model = model;
         this.chessGameFrame = chessGameFrame;
         this.currentPlayer = PlayerColor.BLUE;
 
+
         view.registerController(this);
         initialize();
-
+        addFunctionButton();
         addResetButton();
         view.repaint();
+        SaveAndLoadFrame.map1=model.grid;
     }
+
     private ChessGameFrame getChessGameFrame(){
         return this.chessGameFrame;
     }
 
+    public void addFunctionButton()
+    {
+        functionbutton.setLocation(810, 810 / 10*3);
+        functionbutton.setSize(150, 60);
+        functionbutton.setBackground(new Color(246, 245, 238));
+        functionbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        functionbutton.setVisible(true);
+        chessGameFrame.add(functionbutton);
+        functionbutton.setVisible(false);
+        functionbutton.addActionListener(e ->//底下两个button没了！！！
+        {
+            MenuFrame menuFrame = new MenuFrame(view,model,this);
+            menuFrame.setVisible(true);
+        });
+    }
     private void addResetButton()
     {
         button = new JButton("Reset");
-        button.setLocation(810, 810 / 10 + 120);
-        button.setSize(200, 60);
+        button.setLocation(810, 810/10*2);
+        button.setBackground(new Color(246, 245, 238));
+        button.setSize(100, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         chessGameFrame.add(button);
         button.setVisible(false);
@@ -75,24 +98,40 @@ public class GameController implements GameListener {
     }
 
     public void initialize() {
+
         currentPlayer = PlayerColor.BLUE;
         model.initPieces();
         view.initiateChessComponent(model);
         view.repaint();
         chessGameFrame.setRounds(1);
         chessGameFrame.setRounds();
+        SaveAndLoadFrame.turn=1;
+        ans.setLength(0);
+        ans.append("9 7 ");
+        SaveAndLoadFrame.turnturn=0;
+        SaveAndLoadFrame.map1=model.grid;
 //        System.out.println(currentPlayer);
     }
 
     // after a valid move swap the player
-    private void swapColor()
+    public void swapColor()
     {
+        if(cheat==0)
+        {
+            ChessGameFrame.setTurn();
+            currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+            SaveAndLoadFrame.turnturn^=1;
+            SaveAndLoadFrame.map1=model.grid;
+            SaveAndLoadFrame.turn++;
+        }
+        else
+        {
+            cheat--;
+        }
         ChessGameFrame.setRounds();
-        ChessGameFrame.setTurn();
-        currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
     }
 
-    private boolean winBlue() {
+    public boolean winBlue() {
         // TODO: Check the board if there is a winner
         boolean test = true;
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -135,7 +174,7 @@ public class GameController implements GameListener {
         }
         return test || ( model.getChessPieceAt(new ChessboardPoint(0,3))!=null && model.getChessPieceOwner(new ChessboardPoint(0,3)).equals(PlayerColor.BLUE));
     }
-    private boolean winRed() {
+    public boolean winRed() {
         // TODO: Check the board if there is a winner
         boolean test = true;
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
@@ -182,8 +221,14 @@ public class GameController implements GameListener {
 
     // click an empty cell
     @Override
-    public void onPlayerClickCell(ChessboardPoint point, CellComponent component) {
-        if (selectedPoint != null && model.isValidMove(selectedPoint, point)) {
+    public void onPlayerClickCell(ChessboardPoint point, CellComponent component)
+    {
+        if (selectedPoint != null && model.isValidMove(selectedPoint, point))
+        {
+//            System.out.println(selectedPoint.getRow());
+//            System.out.println(selectedPoint.getCol());
+            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
+            view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
             model.moveChessPiece(selectedPoint, point);
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
@@ -191,7 +236,8 @@ public class GameController implements GameListener {
             view.repaint();
             // TODO: if the chess enter Dens or Traps and so on
         }
-        if(winBlue()){
+        if(winBlue())
+        {
             UIManager.put("OptionPane.yesButtonText", "Reset");
             UIManager.put("OptionPane.noButtonText", "Close");
             int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
@@ -202,7 +248,8 @@ public class GameController implements GameListener {
                 chessGameFrame.dispose();
             }
         }
-        if(winRed()){
+        if(winRed())
+        {
             UIManager.put("OptionPane.yesButtonText", "Reset");
             UIManager.put("OptionPane.noButtonText", "Close");
             int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
@@ -216,7 +263,8 @@ public class GameController implements GameListener {
     }
 
     // click a cell with a chess
-    public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component) {
+    public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
+    {
         if (selectedPoint == null)
         {
             if (model.getChessPieceOwner(point).equals(currentPlayer))
@@ -236,6 +284,9 @@ public class GameController implements GameListener {
         // TODO: Implement capture function
         else if (model.isValidCapture(selectedPoint, point))
         {
+            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
+            AnimalChessComponent temp=view.removeChessComponentAtGrid(point);
+            view.regretStack.push(new RegretNode(2,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(point),point,temp));
             model.captureChessPiece(selectedPoint, point);
             view.getGridComponentAt(point).removeAll();
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
