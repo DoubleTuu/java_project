@@ -172,30 +172,35 @@ public class SaveAndLoadFrame extends JFrame
                                 gameController.swapColor();
                                 gameController.view.repaint();
                             }
-//                            if(gameController.winBlue())
-//                            {
-//                                UIManager.put("OptionPane.yesButtonText", "Reset");
-//                                UIManager.put("OptionPane.noButtonText", "Close");
-//                                int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
-//                                if (choice == JOptionPane.YES_OPTION) {
-//                                    gameController.initialize();
-//                                }
-//                                else{
-//                                    gameController.chessGameFrame.dispose();
-//                                }
-//                            }
-//                            if(gameController.winRed())
-//                            {
-//                                UIManager.put("OptionPane.yesButtonText", "Reset");
-//                                UIManager.put("OptionPane.noButtonText", "Close");
-//                                int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
-//                                if (choice == JOptionPane.YES_OPTION) {
-//                                    gameController.initialize();
-//                                }
-//                                else{
-//                                    gameController.chessGameFrame.dispose();
-//                                }
-//                            }
+                            else
+                            {
+                                new ErrorFrame("5");
+                                return ;
+                            }
+                            if(gameController.winBlue())
+                            {
+                                UIManager.put("OptionPane.yesButtonText", "Reset");
+                                UIManager.put("OptionPane.noButtonText", "Close");
+                                int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
+                                if (choice == JOptionPane.YES_OPTION) {
+                                    gameController.initialize();
+                                }
+                                else{
+                                    gameController.chessGameFrame.dispose();
+                                }
+                            }
+                            if(gameController.winRed())
+                            {
+                                UIManager.put("OptionPane.yesButtonText", "Reset");
+                                UIManager.put("OptionPane.noButtonText", "Close");
+                                int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
+                                if (choice == JOptionPane.YES_OPTION) {
+                                    gameController.initialize();
+                                }
+                                else{
+                                    gameController.chessGameFrame.dispose();
+                                }
+                            }
                         }
                         else
                         {
@@ -211,6 +216,35 @@ public class SaveAndLoadFrame extends JFrame
                                 gameController.view.setChessComponentAtGrid(point, gameController.view.removeChessComponentAtGrid(selectedPoint));
                                 gameController.swapColor();
                                 gameController.view.repaint();
+                            }
+                            else
+                            {
+                                new ErrorFrame("5");
+                                return ;
+                            }
+                            if(gameController.winBlue())
+                            {
+                                UIManager.put("OptionPane.yesButtonText", "Reset");
+                                UIManager.put("OptionPane.noButtonText", "Close");
+                                int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
+                                if (choice == JOptionPane.YES_OPTION) {
+                                    gameController.initialize();
+                                }
+                                else{
+                                    gameController.chessGameFrame.dispose();
+                                }
+                            }
+                            if(gameController.winRed())
+                            {
+                                UIManager.put("OptionPane.yesButtonText", "Reset");
+                                UIManager.put("OptionPane.noButtonText", "Close");
+                                int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
+                                if (choice == JOptionPane.YES_OPTION) {
+                                    gameController.initialize();
+                                }
+                                else{
+                                    gameController.chessGameFrame.dispose();
+                                }
                             }
                         }
                     }
