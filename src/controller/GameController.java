@@ -37,6 +37,7 @@ public class GameController implements GameListener {
     public ChessGameFrame chessGameFrame;
     public static JButton functionbutton = new JButton("function");
     public JLabel[][] WhereToMove_Jl = new JLabel[9][7];
+    public JLabel[][] FootPrint_Jl = new JLabel[9][7];
 
 //    public static Stack<RegretNode> regretStack = new Stack<>();
 //    public int getGameRounds()
@@ -58,7 +59,7 @@ public class GameController implements GameListener {
         view.repaint();
         SaveAndLoadFrame.map1=model.grid;
         initWhereToMove_Jl();
-
+        initFootPrint_Jl();
     }
 
     private ChessGameFrame getChessGameFrame(){
@@ -104,7 +105,10 @@ public class GameController implements GameListener {
 
     public void initialize() {
 
+        remove_Move();
+        remove_Footprint();
         currentPlayer = PlayerColor.BLUE;
+        selectedPoint = null;
         model.initPieces();
         view.initiateChessComponent(model);
         view.repaint();
@@ -232,6 +236,7 @@ public class GameController implements GameListener {
         {
 //            System.out.println(selectedPoint.getRow());
 //            System.out.println(selectedPoint.getCol());
+            ChessboardPoint selectedPoint1 = selectedPoint;
             ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
             view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
             model.moveChessPiece(selectedPoint, point);
@@ -241,6 +246,8 @@ public class GameController implements GameListener {
             view.repaint();
             // TODO: if the chess enter Dens or Traps and so on
             remove_Move();
+            remove_Footprint();
+            addFootprint(selectedPoint1, point);
 //            chessGameFrame.setVisible(true);
         }
         judgeWin();
@@ -272,6 +279,7 @@ public class GameController implements GameListener {
         // TODO: Implement capture function
         else if (model.isValidCapture(selectedPoint, point))
         {
+            ChessboardPoint selectedPoint1=selectedPoint;
             ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
             AnimalChessComponent temp=view.removeChessComponentAtGrid(point);
             view.regretStack.push(new RegretNode(2,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(point),point,temp));
@@ -282,7 +290,8 @@ public class GameController implements GameListener {
             swapColor();
             view.repaint();
             remove_Move();
-            chessGameFrame.setVisible(true);
+            remove_Footprint();
+            addFootprint(selectedPoint1, point);
         }
         judgeWin();
     }
@@ -366,8 +375,56 @@ public class GameController implements GameListener {
     }
     public void remove_Move(){
         for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++) {
+                if (WhereToMove_Jl[i][j] != null) {
+                    chessGameFrame.getLayeredPane().remove(WhereToMove_Jl[i][j]);
+                }
+            }
+        }
+        chessGameFrame.repaint();
+    }
+    public void initFootPrint_Jl(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
             for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
-                chessGameFrame.getLayeredPane().remove(WhereToMove_Jl[i][j]);
+                FootPrint_Jl[i][j] = new JLabel();
+                FootPrint_Jl[i][j].setBounds(810/5+72+ j*72+3,810/10+ i*72+3,72-6,72-6);
+            }
+        }
+    }
+    public void addFootprint(ChessboardPoint selectedPoint, ChessboardPoint point){
+        int i=selectedPoint.getRow();
+        int j=selectedPoint.getCol();
+        int k=point.getRow();
+        int l=point.getCol();
+        ImageIcon icon;
+        if(i==k){
+            if(j>l){
+                icon = new ImageIcon("resource\\FootprintLeft.png");
+            }
+            else{
+                icon = new ImageIcon("resource\\FootprintRight.png");
+            }
+        }
+        else{
+            if(i>k){
+                icon = new ImageIcon("resource\\FootprintUp.png");
+            }
+            else{
+                icon = new ImageIcon("resource\\FootprintDown.png");
+            }
+        }
+        icon.setImage(icon.getImage().getScaledInstance(72-6,72-6,Image.SCALE_DEFAULT));
+        FootPrint_Jl[i][j].setIcon(icon);
+        chessGameFrame.add(FootPrint_Jl[i][j]);
+        chessGameFrame.getLayeredPane().add(FootPrint_Jl[i][j],Integer.valueOf(Integer.MAX_VALUE));
+        chessGameFrame.repaint();
+    }
+    public void remove_Footprint(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++) {
+                if (FootPrint_Jl[i][j] != null) {
+                    chessGameFrame.getLayeredPane().remove(FootPrint_Jl[i][j]);
+                }
             }
         }
         chessGameFrame.repaint();
