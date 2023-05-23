@@ -104,8 +104,6 @@ public class ChessboardComponent extends JLabel
                 CellComponent cell;
                 if (riverCell.contains(temp))
                 {
-                    Image shit =new ImageIcon("resource\\River.png").getImage();
-//                    System.out.println("shit"+shit.getWidth());
                     cell = new CellComponent(new ImageIcon("resource\\River.png").getImage(),
                             j*CHESS_SIZE+3,i*CHESS_SIZE+3,CHESS_SIZE-6,CHESS_SIZE-6);
                     this.add(cell);

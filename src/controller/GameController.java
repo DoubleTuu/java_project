@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Stack;
 
+import static model.Constant.CHESSBOARD_COL_SIZE;
+import static model.Constant.CHESSBOARD_ROW_SIZE;
 import static view.SaveAndLoadFrame.ans;
 
 /**
@@ -34,6 +36,7 @@ public class GameController implements GameListener {
 
     public ChessGameFrame chessGameFrame;
     public static JButton functionbutton = new JButton("function");
+    public JLabel[][] WhereToMove_Jl = new JLabel[9][7];
 
 //    public static Stack<RegretNode> regretStack = new Stack<>();
 //    public int getGameRounds()
@@ -54,6 +57,8 @@ public class GameController implements GameListener {
         addResetButton();
         view.repaint();
         SaveAndLoadFrame.map1=model.grid;
+        initWhereToMove_Jl();
+
     }
 
     private ChessGameFrame getChessGameFrame(){
@@ -92,7 +97,7 @@ public class GameController implements GameListener {
             if (choice == JOptionPane.YES_OPTION)
             {
                 initialize();
-                chessGameFrame.initTurn();
+                ChessGameFrame.initTurn();
             }
         });
     }
@@ -104,7 +109,7 @@ public class GameController implements GameListener {
         view.initiateChessComponent(model);
         view.repaint();
         chessGameFrame.setRounds(1);
-        chessGameFrame.setRounds();
+        ChessGameFrame.setRounds();
         SaveAndLoadFrame.turn=1;
         ans.setLength(0);
         ans.append("9 7 ");
@@ -180,7 +185,7 @@ public class GameController implements GameListener {
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++) {
             for (int j = 0; j < Constant.CHESSBOARD_COL_SIZE.getNum(); j++) {
                 if(model.getChessPieceAt(new ChessboardPoint(i,j))!=null && model.getChessPieceOwner(new ChessboardPoint(i,j)).equals(PlayerColor.BLUE)) {
-                    for (int k = i - 3; k <= i + 3; k++) {
+                    for (int k = i - 4; k <= i + 4; k++) {
                         if (k == i) {
                             continue;
                         }
@@ -196,7 +201,7 @@ public class GameController implements GameListener {
                             }
                         }
                     }
-                    for (int k = j - 3; k <= j + 3; k++) {
+                    for (int k = j - 4; k <= j + 4; k++) {
                         if (k == j) {
                             continue;
                         }
@@ -235,18 +240,64 @@ public class GameController implements GameListener {
             swapColor();
             view.repaint();
             // TODO: if the chess enter Dens or Traps and so on
+            remove_Move();
+//            chessGameFrame.setVisible(true);
         }
+        judgeWin();
+    }
+
+    // click a cell with a chess
+    public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
+    {
+        if (selectedPoint == null)
+        {
+            if (model.getChessPieceOwner(point).equals(currentPlayer))
+            {
+                selectedPoint = point;
+                component.setSelected(true);
+                component.repaint();//重新画棋子
+                System.out.println("asd");
+                whereToMove(selectedPoint);
+//                chessGameFrame.setVisible(true);
+            }
+        }
+        else if (selectedPoint.equals(point))
+        {
+            selectedPoint = null;
+            component.setSelected(false);
+            component.repaint();
+            remove_Move();
+//            chessGameFrame.setVisible(true);
+        }
+        // TODO: Implement capture function
+        else if (model.isValidCapture(selectedPoint, point))
+        {
+            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
+            AnimalChessComponent temp=view.removeChessComponentAtGrid(point);
+            view.regretStack.push(new RegretNode(2,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(point),point,temp));
+            model.captureChessPiece(selectedPoint, point);
+            view.getGridComponentAt(point).removeAll();
+            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
+            selectedPoint = null;
+            swapColor();
+            view.repaint();
+            remove_Move();
+            chessGameFrame.setVisible(true);
+        }
+        judgeWin();
+    }
+    public void judgeWin(){
         if(winBlue())
         {
-            UIManager.put("OptionPane.yesButtonText", "Reset");
-            UIManager.put("OptionPane.noButtonText", "Close");
-            int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
-            if (choice == JOptionPane.YES_OPTION) {
-                initialize();
-            }
-            else{
-                chessGameFrame.dispose();
-            }
+        UIManager.put("OptionPane.yesButtonText", "Reset");
+        UIManager.put("OptionPane.noButtonText", "Close");
+        int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION) {
+            initialize();
+        }
+        else{
+            chessGameFrame.dispose();
+        }
         }
         if(winRed())
         {
@@ -261,38 +312,64 @@ public class GameController implements GameListener {
             }
         }
     }
-
-    // click a cell with a chess
-    public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
-    {
-        if (selectedPoint == null)
-        {
-            if (model.getChessPieceOwner(point).equals(currentPlayer))
-            {
-                selectedPoint = point;
-                component.setSelected(true);
-                component.repaint();//重新画棋子
-                System.out.println("asd");
+    public void whereToMove(ChessboardPoint selectedPoint){
+        int i=selectedPoint.getRow();
+        int j=selectedPoint.getCol();
+        for (int k = i - 4; k <= i + 4; k++) {
+            if (k == i) {
+                continue;
+            }
+            if (k >= 0 && k < Constant.CHESSBOARD_ROW_SIZE.getNum()) {
+                if (model.getChessPieceAt(new ChessboardPoint(k,j)) == null) {
+                    if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                        addMove(k,j);
+                    }
+                } else {
+                    if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(k, j))) {
+                        addMove(k,j);
+                    }
+                }
             }
         }
-        else if (selectedPoint.equals(point))
-        {
-            selectedPoint = null;
-            component.setSelected(false);
-            component.repaint();
+        for (int k = j - 4; k <= j + 4; k++) {
+            if (k == j) {
+                continue;
+            }
+            if (k >= 0 && k < Constant.CHESSBOARD_COL_SIZE.getNum()) {
+                if (model.getChessPieceAt(new ChessboardPoint(i,k)) == null) {
+                    if (model.isValidMove(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                        addMove(i,k);
+                    }
+                } else {
+                    if (model.isValidCapture(new ChessboardPoint(i, j), new ChessboardPoint(i, k))) {
+                        addMove(i,k);
+                    }
+                }
+            }
         }
-        // TODO: Implement capture function
-        else if (model.isValidCapture(selectedPoint, point))
-        {
-            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
-            AnimalChessComponent temp=view.removeChessComponentAtGrid(point);
-            view.regretStack.push(new RegretNode(2,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(point),point,temp));
-            model.captureChessPiece(selectedPoint, point);
-            view.getGridComponentAt(point).removeAll();
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
+    }
+    public void initWhereToMove_Jl(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                WhereToMove_Jl[i][j] = new JLabel();
+                WhereToMove_Jl[i][j].setBounds(810/5+72+ j*72+3,810/10+ i*72+3,72-6,72-6);
+            }
         }
+    }
+    public void addMove(int i,int j){
+        ImageIcon icon = new ImageIcon("resource\\Move.png");;
+        icon.setImage(icon.getImage().getScaledInstance(72-6,72-6,Image.SCALE_DEFAULT));
+        WhereToMove_Jl[i][j].setIcon(icon);
+        chessGameFrame.add(WhereToMove_Jl[i][j]);
+        chessGameFrame.getLayeredPane().add(WhereToMove_Jl[i][j],Integer.valueOf(Integer.MAX_VALUE));
+        chessGameFrame.repaint();
+    }
+    public void remove_Move(){
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++){
+                chessGameFrame.getLayeredPane().remove(WhereToMove_Jl[i][j]);
+            }
+        }
+        chessGameFrame.repaint();
     }
 }
