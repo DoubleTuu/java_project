@@ -235,8 +235,6 @@ public class GameController implements GameListener {
     {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point))
         {
-//            System.out.println(selectedPoint.getRow());
-//            System.out.println(selectedPoint.getCol());
             ChessboardPoint selectedPoint1 = selectedPoint;
             ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
             view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
@@ -249,7 +247,6 @@ public class GameController implements GameListener {
             remove_Move();
             remove_Footprint();
             addFootprint(selectedPoint1, point);
-//            chessGameFrame.setVisible(true);
         }
         judgeWin();
     }
@@ -266,7 +263,6 @@ public class GameController implements GameListener {
                 component.repaint();//重新画棋子
                 System.out.println("asd");
                 whereToMove(selectedPoint);
-//                chessGameFrame.setVisible(true);
             }
         }
         else if (selectedPoint.equals(point))
