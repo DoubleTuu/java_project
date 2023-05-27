@@ -109,7 +109,7 @@ public class Save_and_Load
             int j=0;
             for(;i<temp.length();)
             {
-                if(temp.charAt(i)=='b'||temp.charAt(i)=='r')
+                if(temp.charAt(i)=='b'||temp.charAt(i)=='r'||(temp.charAt(i)>='0'&&temp.charAt(i)<='9'))
                 {
                     break;
                 }
@@ -130,12 +130,27 @@ public class Save_and_Load
                     }
                     owner[which]=temp.substring(i,j);
                     i=j+1;
-                    num[which]=Character.getNumericValue(temp.charAt(i));
-                    i+=2;
-                    row[which]=Character.getNumericValue(temp.charAt(i));
-                    i+=2;
-                    col[which]=Character.getNumericValue(temp.charAt(i));
-                    i+=2;
+                    j=i;
+                    while(temp.charAt(j)>='0'&&temp.charAt(j)<='9')
+                    {
+                        j++;
+                    }
+                    num[which]=Integer.parseInt(temp.substring(i,j));
+                    i=j+1;
+                    j=i;
+                    while(temp.charAt(j)>='0'&&temp.charAt(j)<='9')
+                    {
+                        j++;
+                    }
+                    row[which]=Integer.parseInt(temp.substring(i,j));
+                    i=j+1;
+                    j=i;
+                    while(temp.charAt(j)>='0'&&temp.charAt(j)<='9')
+                    {
+                        j++;
+                    }
+                    col[which]=Integer.parseInt(temp.substring(i,j));
+                    i=j+1;
                 }
             }
             if(temp.charAt(i)=='b')
@@ -143,10 +158,14 @@ public class Save_and_Load
                 turn="blue";
                 i+=5;
             }
-            else
+            else if(temp.charAt(i)=='r')
             {
                 turn="red";
                 i+=4;
+            }
+            else
+            {
+                turn="null";
             }
             j=i;
             while(temp.charAt(j)>='0'&&temp.charAt(j)<='9')

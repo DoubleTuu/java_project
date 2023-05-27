@@ -22,6 +22,7 @@ import static view.SaveAndLoadFrame.ans;
 */
 public class GameController implements GameListener {
 
+    public static GameController gameController;
     public static int cheat=0;
     public Chessboard model;
     public ChessboardComponent view;
@@ -419,10 +420,14 @@ public class GameController implements GameListener {
         chessGameFrame.getLayeredPane().add(FootPrint_Jl[i][j],Integer.valueOf(Integer.MAX_VALUE));
         chessGameFrame.repaint();
     }
-    public void remove_Footprint(){
-        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++){
-            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++) {
-                if (FootPrint_Jl[i][j] != null) {
+    public void remove_Footprint()
+    {
+        for(int i=0;i<Constant.CHESSBOARD_ROW_SIZE.getNum();i++)
+        {
+            for(int j=0;j<Constant.CHESSBOARD_COL_SIZE.getNum();j++)
+            {
+                if (FootPrint_Jl[i][j] != null)
+                {
                     chessGameFrame.getLayeredPane().remove(FootPrint_Jl[i][j]);
                 }
             }

@@ -37,7 +37,7 @@ public class SaveAndLoadFrame extends JFrame
     {
         this.SaveOrLoad = SaveOrLoad;
         this.gameController= gameController;
-        setSize(510, 410);
+        setSize(510, 600);
         setLocationRelativeTo(null); // Center the window.
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
@@ -50,6 +50,10 @@ public class SaveAndLoadFrame extends JFrame
         addSaveAndLoadChoice("resource\\file\\save7.txt",30,250,7);
         addSaveAndLoadChoice("resource\\file\\save8.txt",30,290,8);
         addSaveAndLoadChoice("resource\\file\\save9.txt",30,330,9);
+        addSaveAndLoadChoice("resource\\file\\save10.txt",30,370,10);
+        addSaveAndLoadChoice("resource\\file\\save11.txt",30,410,11);
+        addSaveAndLoadChoice("resource\\file\\save12.txt",30,450,12);
+        addSaveAndLoadChoice("resource\\file\\save13.txt",30,490,13);
     }
     public void addSaveAndLoadChoice(String path, int x, int y, int n){
         File file = new File(path);
@@ -66,6 +70,7 @@ public class SaveAndLoadFrame extends JFrame
             if(filter.accept(file,path)==false)
             {
                 new ErrorFrame("1");
+                return ;
             }
             else
             {
@@ -122,31 +127,26 @@ public class SaveAndLoadFrame extends JFrame
                 }
                 else
                 {
-
                     Save_and_Load.work(path);
-
+//                    System.out.println(Save_and_Load.turn);
                     if(Save_and_Load.Chessboard_row!=9||Save_and_Load.Chessboard_col!=7)
                     {
                         new ErrorFrame("2");
                         return ;
                     }
                     System.out.println("Load");
-                    for(int i=0;i<Save_and_Load.which;i++)
-                    {
-                        if(Save_and_Load.num[i]>1||Save_and_Load.num[i]<0||(check(Save_and_Load.name[i])==false))
-                        {
+                    for(int i=0;i<Save_and_Load.which;i++) {
+                        if (Save_and_Load.num[i] > 1 || Save_and_Load.num[i] < 0 || (check(Save_and_Load.name[i]) == false) || Save_and_Load.row[i] < 0 || Save_and_Load.row[i] > 8 || Save_and_Load.col[i] < 0 || Save_and_Load.col[i] > 6) {
                             new ErrorFrame("3");
-                            return ;
+                            return;
                         }
                     }
-
                     if(Save_and_Load.turn!="red"&&Save_and_Load.turn!="blue")
                     {
                         new ErrorFrame("4");
                         return ;
                     }
                     int tuen=Save_and_Load.rounds;
-                    System.out.println(tuen);
                     gameController.initialize();
 //                    repaint();
 //                    try {
@@ -154,10 +154,8 @@ public class SaveAndLoadFrame extends JFrame
 //                    } catch (InterruptedException e6) {
 //                        e6.printStackTrace();
 //                    }
-
                     for(int i=1;i<tuen;i++)
                     {
-                        System.out.println("fuck");
                         if(gameController.model.grid[Integer.parseInt(Save_and_Load.step[i][1][0])][Integer.parseInt(Save_and_Load.step[i][1][1])].getPiece()==null)
                         {
 

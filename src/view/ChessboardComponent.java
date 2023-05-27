@@ -44,6 +44,7 @@ public class ChessboardComponent extends JLabel
     }
     public void regret(Chessboard chessboard)
     {
+        GameController.gameController.remove_Footprint();
         if(regretStack.isEmpty())
         {
             new ErrorFrame("6");

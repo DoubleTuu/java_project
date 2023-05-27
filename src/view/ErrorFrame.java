@@ -17,7 +17,7 @@ public class ErrorFrame extends JFrame {
             case "1" -> label.setText("101：wrong suffix!");
             case "2" -> label.setText("102: wrong chessboard!");
             case "3" -> label.setText("103: wrong component!");
-            case "4" -> label.setText("104: missing color!");
+            case "4" -> label.setText("104: missing player!");
             case "5" -> label.setText("105: wrong move!");
             default  -> label.setText("can't regret before first move!");
         }
