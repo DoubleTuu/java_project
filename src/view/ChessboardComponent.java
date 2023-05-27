@@ -51,7 +51,8 @@ public class ChessboardComponent extends JLabel
         }
         else
         {
-
+            SaveAndLoadFrame.turn--;
+            SaveAndLoadFrame.ans.delete(SaveAndLoadFrame.ans.length()-8,SaveAndLoadFrame.ans.length());
             RegretNode regretNode = regretStack.pop();
             if(regretNode.type==1)//移动
             {
