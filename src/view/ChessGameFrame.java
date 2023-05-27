@@ -15,6 +15,7 @@ import java.lang.reflect.MalformedParametersException;
  */
 public class ChessGameFrame extends JFrame {
     //    public final Dimension FRAME_SIZE ;
+    public static ChessGameFrame mainFrame;
     private final int WIDTH;
     private final int HEIGTH;
 
@@ -94,8 +95,9 @@ public class ChessGameFrame extends JFrame {
         exitButton.setSize(200, 60);
         exitButton.setBackground(new Color(245, 226, 178));
         exitButton.setFont(new Font("华文行楷", Font.BOLD,40));
-        exitButton.setVisible(true);
+//        exitButton.setVisible(true);
         exitButton.setBorderPainted(false);
+//        exitButton.setComponentZOrder(this, 0);
         add(exitButton);
 
         JButton musicButton = new JButton("音乐");
