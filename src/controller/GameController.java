@@ -11,6 +11,7 @@ import java.util.Stack;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
+import static view.ChessGameFrame.mainFrame;
 import static view.SaveAndLoadFrame.ans;
 
 /**
@@ -28,7 +29,7 @@ public class GameController implements GameListener {
     public ChessboardComponent view;
     public PlayerColor currentPlayer;
 
-    public static JButton button;
+
 
 //    public int gameRounds=1;
 
@@ -36,7 +37,9 @@ public class GameController implements GameListener {
     private ChessboardPoint selectedPoint;
 
     public ChessGameFrame chessGameFrame;
-    public static JButton functionbutton = new JButton("function");
+    public  JButton functionbutton = new JButton("function");
+    public  JButton resetbutton;
+    public  JButton backbutton=new JButton("back");
     public JLabel[][] WhereToMove_Jl = new JLabel[9][7];
     public JLabel[][] FootPrint_Jl = new JLabel[9][7];
 
@@ -57,6 +60,7 @@ public class GameController implements GameListener {
         initialize();
         addFunctionButton();
         addResetButton();
+        addbackButton();
         view.repaint();
         SaveAndLoadFrame.map1=model.grid;
         initWhereToMove_Jl();
@@ -67,31 +71,16 @@ public class GameController implements GameListener {
         return this.chessGameFrame;
     }
 
-    public void addFunctionButton()
-    {
-        functionbutton.setLocation(810, 810 / 10*3);
-        functionbutton.setSize(150, 60);
-        functionbutton.setBackground(new Color(246, 245, 238));
-        functionbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
-        functionbutton.setVisible(true);
-        chessGameFrame.add(functionbutton);
-        functionbutton.setVisible(false);
-        functionbutton.addActionListener(e ->//底下两个button没了！！！
-        {
-            MenuFrame menuFrame = new MenuFrame(view,model,this);
-            menuFrame.setVisible(true);
-        });
-    }
     private void addResetButton()
     {
-        button = new JButton("Reset");
-        button.setLocation(810, 810/10*2);
-        button.setBackground(new Color(246, 245, 238));
-        button.setSize(100, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        chessGameFrame.add(button);
-        button.setVisible(false);
-        button.addActionListener((e) ->
+        resetbutton = new JButton("Reset");
+        resetbutton.setLocation(810, 810/10*1);
+        resetbutton.setBackground(new Color(246, 245, 238));
+        resetbutton.setSize(100, 60);
+        resetbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        chessGameFrame.add(resetbutton);
+        resetbutton.setVisible(false);
+        resetbutton.addActionListener((e) ->
         {
             UIManager.put("OptionPane.yesButtonText", "Yes");
             UIManager.put("OptionPane.noButtonText", "No");
@@ -99,10 +88,44 @@ public class GameController implements GameListener {
             if (choice == JOptionPane.YES_OPTION)
             {
                 initialize();
-                ChessGameFrame.initTurn();
+                mainFrame.initTurn();
             }
         });
     }
+    public void addFunctionButton()
+    {
+        functionbutton.setLocation(810, 810 / 10*2);
+        functionbutton.setSize(150, 60);
+        functionbutton.setBackground(new Color(246, 245, 238));
+        functionbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        chessGameFrame.add(functionbutton);
+        functionbutton.addActionListener(e ->//底下两个button没了！！！
+        {
+            MenuFrame menuFrame = new MenuFrame(view,model,this);
+            menuFrame.setVisible(true);
+        });
+    }
+    public void addbackButton()
+    {
+        backbutton.setLocation(810, 810 / 10*3);
+        backbutton.setSize(150, 60);
+        backbutton.setBackground(new Color(246, 245, 238));
+        backbutton.setFont(new Font("Rockwell", Font.BOLD, 20));
+        chessGameFrame.add(backbutton);
+        backbutton.addActionListener(e ->//底下两个button没了！！！
+        {
+//            chessGameFrame.chessboardComponent.setVisible(false);
+//            chessGameFrame.bg.setVisible(false);
+            chessGameFrame.menubackGround.setVisible(true);
+            chessGameFrame.roundsButton.setVisible(false);
+            chessGameFrame.currentColor.setVisible(false);
+            chessGameFrame.exitButton.setVisible(true);
+            chessGameFrame.musicButton.setVisible(true);
+            chessGameFrame.classicModeButton.setVisible(true);
+            view.repaint();
+        });
+    }
+
 
     public void initialize() {
 
@@ -113,8 +136,8 @@ public class GameController implements GameListener {
         model.initPieces();
         view.initiateChessComponent(model);
         view.repaint();
-        chessGameFrame.setRounds(1);
-        ChessGameFrame.setRounds();
+        mainFrame.setRounds(1);
+        mainFrame.setRounds();
         SaveAndLoadFrame.turn=1;
         ans.setLength(0);
         ans.append("9 7 ");
@@ -128,7 +151,7 @@ public class GameController implements GameListener {
     {
         if(cheat==0)
         {
-            ChessGameFrame.setTurn();
+            mainFrame.setTurn();
             currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
             SaveAndLoadFrame.turnturn^=1;
             SaveAndLoadFrame.map1=model.grid;
@@ -138,7 +161,7 @@ public class GameController implements GameListener {
         {
             cheat--;
         }
-        ChessGameFrame.setRounds();
+        mainFrame.setRounds();
     }
 
     public boolean winBlue() {
