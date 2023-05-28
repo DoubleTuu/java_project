@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.Date;
-
+import controller.GameController.*;
 
 public class SaveAndLoadFrame extends JFrame
 {
@@ -115,12 +115,15 @@ public class SaveAndLoadFrame extends JFrame
                     }
 
 
-                    try {
+                    try
+                    {
                         FileWriter writer = new FileWriter(file, true);
                         writer.write(ans.toString());
                         writer.close();
                         System.out.println("File modified successfully!");
-                    } catch (IOException e1) {
+                    }
+                    catch (IOException e1)
+                    {
                         e1.printStackTrace();
                     }
                     ans.delete(4,ans.length()-8*(turn-1));
@@ -175,30 +178,7 @@ public class SaveAndLoadFrame extends JFrame
                                 new ErrorFrame("5");
                                 return ;
                             }
-                            if(gameController.winBlue())
-                            {
-                                UIManager.put("OptionPane.yesButtonText", "Reset");
-                                UIManager.put("OptionPane.noButtonText", "Close");
-                                int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
-                                if (choice == JOptionPane.YES_OPTION) {
-                                    gameController.initialize();
-                                }
-                                else{
-                                    gameController.chessGameFrame.dispose();
-                                }
-                            }
-                            if(gameController.winRed())
-                            {
-                                UIManager.put("OptionPane.yesButtonText", "Reset");
-                                UIManager.put("OptionPane.noButtonText", "Close");
-                                int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
-                                if (choice == JOptionPane.YES_OPTION) {
-                                    gameController.initialize();
-                                }
-                                else{
-                                    gameController.chessGameFrame.dispose();
-                                }
-                            }
+                            gameController.judgeWin();
                         }
                         else
                         {
@@ -220,30 +200,7 @@ public class SaveAndLoadFrame extends JFrame
                                 new ErrorFrame("5");
                                 return ;
                             }
-                            if(gameController.winBlue())
-                            {
-                                UIManager.put("OptionPane.yesButtonText", "Reset");
-                                UIManager.put("OptionPane.noButtonText", "Close");
-                                int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
-                                if (choice == JOptionPane.YES_OPTION) {
-                                    gameController.initialize();
-                                }
-                                else{
-                                    gameController.chessGameFrame.dispose();
-                                }
-                            }
-                            if(gameController.winRed())
-                            {
-                                UIManager.put("OptionPane.yesButtonText", "Reset");
-                                UIManager.put("OptionPane.noButtonText", "Close");
-                                int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
-                                if (choice == JOptionPane.YES_OPTION) {
-                                    gameController.initialize();
-                                }
-                                else{
-                                    gameController.chessGameFrame.dispose();
-                                }
-                            }
+                            gameController.judgeWin();
                         }
                     }
                 }

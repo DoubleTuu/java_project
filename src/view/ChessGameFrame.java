@@ -1,6 +1,7 @@
 package view;
 import controller.GameController;
 import model.Chessboard;
+import user.UserFrame;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -30,6 +31,7 @@ public class ChessGameFrame extends JFrame {
     public JButton classicModeButton=new JButton();
     public JButton exitButton =new JButton();
     public JButton musicButton=new JButton();
+    public static JButton userButton = new JButton("用户");
     public JLabel bg = new JLabel();
     public JLabel statusLabel= new JLabel();
     public BackgroundPanel menubackGround = new BackgroundPanel(new ImageIcon("resource\\background.jpg").getImage());
@@ -48,23 +50,23 @@ public class ChessGameFrame extends JFrame {
         setLayout(null);
         initiailUI();
     }
-        public void addMusic() throws MalformedParametersException
+    public void addMusic() throws MalformedParametersException
+    {
+        try
         {
-              try
-              {
-                   File musicPath = new File("resource\\music\\Travelers encore.wav");
-                   AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
-                   clip = AudioSystem.getClip();
-                   clip.open(audioInput);
-                   clip.start();
-                   clip.loop(Clip.LOOP_CONTINUOUSLY);
-              }
-             catch(Exception ex)
-             {
-                 System.out.println("Error with playing sound.");
-                    ex.printStackTrace();
-             }
+            File musicPath = new File("resource\\music\\Travelers encore.wav");
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+            clip = AudioSystem.getClip();
+            clip.open(audioInput);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
         }
+        catch(Exception ex)
+        {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
     public void addclassicModeButton()
     {
         classicModeButton = new JButton("经典模式");
@@ -81,10 +83,24 @@ public class ChessGameFrame extends JFrame {
             new ChessGameFrame(1024, 1024);
         });
     }
+    public void addUserButton(){
+        userButton.setLocation(810, 810/10*4);
+        userButton.setSize(200, 60);
+        userButton.setBackground(new Color(245, 226, 178));
+        userButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        userButton.setBorderPainted(false);
+        add(userButton);
+
+        userButton.addActionListener(e -> {
+            UserFrame userFrame=new UserFrame(chessboardComponent);
+            userFrame.setVisible(true);
+        });
+    }
     public void initiailUI()
     {
         setmenuBackground();
 
+        addUserButton();
 //        JButton functionbutton = new JButton("功能");
 
         classicModeButton = new JButton("经典模式");
@@ -129,6 +145,7 @@ public class ChessGameFrame extends JFrame {
             exitButton.setVisible(false);
 //            remove(musicButton);
             musicButton.setVisible(false);
+            userButton.setVisible(false);
 //            GameController.functionbutton.setVisible(true);
             repaint();
             classicMode();
@@ -165,18 +182,21 @@ public class ChessGameFrame extends JFrame {
     public void classicMode()
     {
         ttt++;
-//        GameController gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(), mainFrame);
-        GameController.gameController.resetbutton.setVisible(true);
-        GameController.gameController.functionbutton.setVisible(true);
-        GameController.gameController.backbutton.setVisible(true);
         if(ttt==1)
         {
+            GameController.gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(), mainFrame);
+            GameController.gameController.resetbutton.setVisible(true);
+            GameController.gameController.functionbutton.setVisible(true);
+            GameController.gameController.backbutton.setVisible(true);
             addLabel();//欢迎来到斗兽棋
             addRoundButton();//rounds
             addPlayerButton();//who turn
         }
         else
         {
+            GameController.gameController.resetbutton.setVisible(true);
+            GameController.gameController.functionbutton.setVisible(true);
+            GameController.gameController.backbutton.setVisible(true);
             this.statusLabel.setVisible(true);
             this.roundsButton.setVisible(true);
             this.currentColor.setVisible(true);

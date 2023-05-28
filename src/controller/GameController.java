@@ -5,8 +5,14 @@ import listener.GameListener;
 import model.*;
 import view.*;
 import view.SaveAndLoadFrame;
+import static user.UserFrame.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.lang.reflect.MalformedParametersException;
 import java.util.Stack;
 
 import static model.Constant.CHESSBOARD_COL_SIZE;
@@ -29,8 +35,9 @@ public class GameController implements GameListener {
     public ChessboardComponent view;
     public PlayerColor currentPlayer;
 
+    public Clip clip;
 
-
+    public Clip clip1;
 //    public int gameRounds=1;
 
     // Record whether there is a selected piece before
@@ -122,6 +129,10 @@ public class GameController implements GameListener {
             chessGameFrame.exitButton.setVisible(true);
             chessGameFrame.musicButton.setVisible(true);
             chessGameFrame.classicModeButton.setVisible(true);
+            chessGameFrame.userButton.setVisible(true);
+            backbutton.setVisible(false);
+            remove_Footprint();
+            remove_Move();
             view.repaint();
         });
     }
@@ -258,6 +269,7 @@ public class GameController implements GameListener {
     {
         if (selectedPoint != null && model.isValidMove(selectedPoint, point))
         {
+            addclickMusic();
             ChessboardPoint selectedPoint1 = selectedPoint;
             ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
             view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
@@ -274,6 +286,38 @@ public class GameController implements GameListener {
         judgeWin();
     }
 
+    public void addclickMusic() throws MalformedParametersException
+    {
+        try
+        {
+            File musicPath = new File("resource\\music\\click.wav");
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+            clip = AudioSystem.getClip();
+            clip.open(audioInput);
+            clip.start();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
+    public void addvictoryMusic() throws MalformedParametersException
+    {
+        try
+        {
+            File musicPath = new File("resource\\music\\victory.wav");
+            AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+            clip1 = AudioSystem.getClip();
+            clip1.open(audioInput);
+            clip1.start();
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error with playing sound.");
+            ex.printStackTrace();
+        }
+    }
     // click a cell with a chess
     public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
     {
@@ -281,6 +325,7 @@ public class GameController implements GameListener {
         {
             if (model.getChessPieceOwner(point).equals(currentPlayer))
             {
+                addclickMusic();
                 selectedPoint = point;
                 component.setSelected(true);
                 component.repaint();//重新画棋子
@@ -290,6 +335,7 @@ public class GameController implements GameListener {
         }
         else if (selectedPoint.equals(point))
         {
+            addclickMusic();
             selectedPoint = null;
             component.setSelected(false);
             component.repaint();
@@ -299,6 +345,8 @@ public class GameController implements GameListener {
         // TODO: Implement capture function
         else if (model.isValidCapture(selectedPoint, point))
         {
+
+            addclickMusic();
             ChessboardPoint selectedPoint1=selectedPoint;
             ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
             AnimalChessComponent temp=view.removeChessComponentAtGrid(point);
@@ -315,21 +363,27 @@ public class GameController implements GameListener {
         }
         judgeWin();
     }
-    public void judgeWin(){
+    public void judgeWin()
+    {
         if(winBlue())
         {
+            gameEndUser(1);
+        addvictoryMusic();
         UIManager.put("OptionPane.yesButtonText", "Reset");
         UIManager.put("OptionPane.noButtonText", "Close");
         int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
             initialize();
         }
-        else{
+        else
+        {
             chessGameFrame.dispose();
         }
         }
         if(winRed())
         {
+            gameEndUser(2);
+            addvictoryMusic();
             UIManager.put("OptionPane.yesButtonText", "Reset");
             UIManager.put("OptionPane.noButtonText", "Close");
             int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
