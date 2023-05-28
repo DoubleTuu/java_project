@@ -367,7 +367,10 @@ public class GameController implements GameListener {
     {
         if(winBlue())
         {
-            gameEndUser(1);
+            if(user1!=null)
+            {
+                gameEndUser(1);
+            }
         addvictoryMusic();
         UIManager.put("OptionPane.yesButtonText", "Reset");
         UIManager.put("OptionPane.noButtonText", "Close");
@@ -382,7 +385,10 @@ public class GameController implements GameListener {
         }
         if(winRed())
         {
-            gameEndUser(2);
+            if(user1!=null)
+            {
+                gameEndUser(2);
+            }
             addvictoryMusic();
             UIManager.put("OptionPane.yesButtonText", "Reset");
             UIManager.put("OptionPane.noButtonText", "Close");

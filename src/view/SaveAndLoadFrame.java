@@ -157,11 +157,21 @@ public class SaveAndLoadFrame extends JFrame
 //                    } catch (InterruptedException e6) {
 //                        e6.printStackTrace();
 //                    }
+
                     for(int i=1;i<tuen;i++)
                     {
+                        System.out.println("sleep");
+                        //睡0.1秒
+//                        try
+//                        {
+//                            Thread.sleep(500); // 暂停0.5秒钟
+//                        }
+//                        catch (InterruptedException e6)
+//                        {
+//                            e6.printStackTrace();
+//                        }
                         if(gameController.model.grid[Integer.parseInt(Save_and_Load.step[i][1][0])][Integer.parseInt(Save_and_Load.step[i][1][1])].getPiece()==null)
                         {
-
                             if(gameController.model.isValidMove(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][0][0]),Integer.parseInt(Save_and_Load.step[i][0][1])),new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][1][0]),Integer.parseInt(Save_and_Load.step[i][1][1]))))
                             {
                                 ChessboardPoint selectedPoint=new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][0][0]),Integer.parseInt(Save_and_Load.step[i][0][1]));
