@@ -118,6 +118,7 @@ public class aiFrame extends JFrame
     }
     public void aimove(int level)
     {
+        GameController.gameController.judgeWin();
         if(level==1)
         {
             ChessboardPoint selectedPoint;

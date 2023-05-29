@@ -133,6 +133,12 @@ public class GameController implements GameListener {
             chessGameFrame.aiModeButton.setVisible(true);
             chessGameFrame.userButton.setVisible(true);
             backbutton.setVisible(false);
+            if(AIframe!=null)
+            {
+                initialize();
+                mainFrame.initTurn();
+                AIframe=null;
+            }
             remove_Footprint();
             remove_Move();
             view.repaint();
@@ -178,24 +184,28 @@ public class GameController implements GameListener {
         mainFrame.setRounds();
         System.out.println("currentPlayer");
         System.out.println(currentPlayer);
-        if(AIframe.aibegin!=0&&currentPlayer==PlayerColor.RED)
+        if(AIframe!=null)
         {
-            System.out.println("AI");
-            AIframe.aimove(AIframe.aibegin);
-            if(cheat==0)
+            if(AIframe.aibegin!=0&&currentPlayer==PlayerColor.RED)
             {
-                mainFrame.setTurn();
-                currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
-                SaveAndLoadFrame.turnturn^=1;
-                SaveAndLoadFrame.map1=model.grid;
-                SaveAndLoadFrame.turn++;
+                System.out.println("AI");
+                AIframe.aimove(AIframe.aibegin);
+                if(cheat==0)
+                {
+                    mainFrame.setTurn();
+                    currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+                    SaveAndLoadFrame.turnturn^=1;
+                    SaveAndLoadFrame.map1=model.grid;
+                    SaveAndLoadFrame.turn++;
+                }
+                else
+                {
+                    cheat--;
+                }
+                mainFrame.setRounds();
             }
-            else
-            {
-                cheat--;
-            }
-            mainFrame.setRounds();
         }
+
     }
 
     public boolean winBlue() {
@@ -337,10 +347,17 @@ public class GameController implements GameListener {
             remove_Move();
             remove_Footprint();
             addFootprint(selectedPoint1, point);
-            swapColor();
+            if(judgeWin()==true)
+            {
+
+            }
+            else
+            {
+                swapColor();
+            }
             view.repaint();
         }
-        judgeWin();
+
     }
     // click a cell with a chess
     public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
@@ -386,12 +403,18 @@ public class GameController implements GameListener {
             remove_Move();
             remove_Footprint();
             addFootprint(selectedPoint1, point);
-            swapColor();
+            if(judgeWin()==true)
+            {
+
+            }
+            else
+            {
+                swapColor();
+            }
             view.repaint();
         }
-        judgeWin();
     }
-    public void judgeWin()
+    public boolean judgeWin()
     {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -409,7 +432,9 @@ public class GameController implements GameListener {
         UIManager.put("OptionPane.noButtonText", "Close");
         int choice = JOptionPane.showConfirmDialog(null, "Blue Side Wins!", "Blue Side Wins", JOptionPane.YES_NO_OPTION);
         if (choice == JOptionPane.YES_OPTION) {
+
             initialize();
+            return true;
         }
         else
         {
@@ -428,11 +453,13 @@ public class GameController implements GameListener {
             int choice = JOptionPane.showConfirmDialog(null, "Red Side Wins!", "Red Side Wins", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION) {
                 initialize();
+                return true;
             }
             else{
                 chessGameFrame.dispose();
             }
         }
+        return false;
     }
     public void whereToMove(ChessboardPoint selectedPoint){
         int i=selectedPoint.getRow();
