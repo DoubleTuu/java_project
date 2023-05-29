@@ -8,7 +8,9 @@ import java.awt.*;
 import java.io.*;
 import java.util.Date;
 import controller.GameController.*;
-
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 public class SaveAndLoadFrame extends JFrame
 {
     public static int turnturn=0;
@@ -18,6 +20,7 @@ public class SaveAndLoadFrame extends JFrame
     public static String where;
     boolean SaveOrLoad; //true:save false:load
     public GameController gameController;
+    public ChessboardComponent chessboardComponent;
     FilenameFilter filter = new FilenameFilter() {
         @Override
         public boolean accept(File dir, String name)
@@ -33,10 +36,11 @@ public class SaveAndLoadFrame extends JFrame
             return false;
 
     }
-    public SaveAndLoadFrame (boolean SaveOrLoad, GameController gameController) throws HeadlessException
+    public SaveAndLoadFrame (boolean SaveOrLoad, GameController gameController,ChessboardComponent chessboardComponent) throws HeadlessException
     {
         this.SaveOrLoad = SaveOrLoad;
         this.gameController= gameController;
+        this.chessboardComponent=chessboardComponent;
         setSize(510, 600);
         setLocationRelativeTo(null); // Center the window.
         getContentPane().setBackground(Color.WHITE);
@@ -160,16 +164,11 @@ public class SaveAndLoadFrame extends JFrame
 
                     for(int i=1;i<tuen;i++)
                     {
-                        System.out.println("sleep");
-                        //睡0.1秒
-//                        try
-//                        {
-//                            Thread.sleep(500); // 暂停0.5秒钟
-//                        }
-//                        catch (InterruptedException e6)
-//                        {
-//                            e6.printStackTrace();
-//                        }
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                gameController.view.repaint();
+                            }
+                        });
                         if(gameController.model.grid[Integer.parseInt(Save_and_Load.step[i][1][0])][Integer.parseInt(Save_and_Load.step[i][1][1])].getPiece()==null)
                         {
                             if(gameController.model.isValidMove(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][0][0]),Integer.parseInt(Save_and_Load.step[i][0][1])),new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][1][0]),Integer.parseInt(Save_and_Load.step[i][1][1]))))
@@ -181,7 +180,45 @@ public class SaveAndLoadFrame extends JFrame
                                 gameController.model.moveChessPiece(selectedPoint, point);
                                 gameController.view.setChessComponentAtGrid(point, gameController.view.removeChessComponentAtGrid(selectedPoint));
                                 gameController.swapColor();
-                                gameController.view.repaint();
+                                //模拟鼠标点击和释放
+//                                Point framelocation=gameController.view.getLocationOnScreen();
+//                                int x1=Integer.parseInt(Save_and_Load.step[i][0][1])*72+36;
+//                                int y1=Integer.parseInt(Save_and_Load.step[i][0][0])*72+36;
+//                                int x2=Integer.parseInt(Save_and_Load.step[i][1][1])*72+36;
+//                                int y2=Integer.parseInt(Save_and_Load.step[i][1][0])*72+36;
+//                                System.out.println("so");
+//                                JComponent clickedComponent = (JComponent) this.chessboardComponent.getComponentAt(x1, y1);
+//                                if (clickedComponent.getComponentCount() == 0)
+//                                {
+//                                    System.out.print("None chess here and ");
+//                                    gameController.onPlayerClickCell(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][0][0]),Integer.parseInt(Save_and_Load.step[i][0][1])), (CellComponent) clickedComponent);
+//                                }
+//                                else
+//                                {
+//                                    System.out.print("One chess here and ");
+//                                    gameController.onPlayerClickChessPiece(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][0][0]),Integer.parseInt(Save_and_Load.step[i][0][1])), (AnimalChessComponent) clickedComponent.getComponents()[0]);
+//                                }
+//                                repaint();
+//                                try
+//                                {
+//                                    Thread.sleep(30000); // 暂停0.5秒钟
+//                                }
+//                                catch (InterruptedException e6)
+//                                {
+//                                    e6.printStackTrace();
+//                                }
+//                                System.out.println("then");
+//                                clickedComponent = (JComponent) getComponentAt(x2, y2);
+//                                if (clickedComponent.getComponentCount() == 0)
+//                                {
+//                                    System.out.print("None chess here and ");
+//                                    gameController.onPlayerClickCell(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][1][0]),Integer.parseInt(Save_and_Load.step[i][1][1])), (CellComponent) clickedComponent);
+//                                }
+//                                else
+//                                {
+//                                    System.out.print("One chess here and ");
+//                                    gameController.onPlayerClickChessPiece(new ChessboardPoint(Integer.parseInt(Save_and_Load.step[i][1][0]),Integer.parseInt(Save_and_Load.step[i][1][1])), (AnimalChessComponent) clickedComponent.getComponents()[0]);
+//                                }
                             }
                             else
                             {
@@ -203,7 +240,7 @@ public class SaveAndLoadFrame extends JFrame
                                 gameController.view.getGridComponentAt(point).removeAll();
                                 gameController.view.setChessComponentAtGrid(point, gameController.view.removeChessComponentAtGrid(selectedPoint));
                                 gameController.swapColor();
-                                gameController.view.repaint();
+//                                gameController.view.repaint();
                             }
                             else
                             {

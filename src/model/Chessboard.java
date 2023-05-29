@@ -141,6 +141,9 @@ public class Chessboard {
                     return !chessboardComponent.getRiverCell().contains(new ChessboardPoint(dest.getRow(), dest.getCol()));
                 }
             }
+            else {
+                return false;
+            }
         }
         //over the river
         if(getChessPieceAt(src).getName() == "Lion" || getChessPieceAt(src).getName() == "Tiger") {

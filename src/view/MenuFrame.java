@@ -76,7 +76,7 @@ public class MenuFrame extends JFrame
 
         button.addActionListener(e -> {
             System.out.println("Saving game");
-            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(true,gameController);
+            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(true,gameController,chessboardComponent);
             saveAndLoadFrame.setVisible(true);
             dispose();
         });
@@ -92,7 +92,7 @@ public class MenuFrame extends JFrame
 
         button.addActionListener(e -> {
             System.out.println("Click load");
-            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(false,gameController);
+            SaveAndLoadFrame saveAndLoadFrame = new SaveAndLoadFrame(false,gameController,chessboardComponent);
             saveAndLoadFrame.setVisible(true);
             dispose();
         });

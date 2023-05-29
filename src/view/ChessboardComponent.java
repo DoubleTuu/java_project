@@ -356,6 +356,8 @@ public class ChessboardComponent extends JLabel
         if (e.getID() == MouseEvent.MOUSE_PRESSED)
         {
             JComponent clickedComponent = (JComponent) getComponentAt(e.getX(), e.getY());
+//            System.out.println(e.getX());
+//            System.out.println(e.getY());
             if (clickedComponent.getComponentCount() == 0)
             {
                 System.out.print("None chess here and ");

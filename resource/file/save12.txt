@@ -1,0 +1,1 @@
+9 7 Lion BLUE 1 8 6 Tiger BLUE 1 8 0 Dog BLUE 1 7 5 Cat BLUE 1 7 1 Mouse BLUE 1 6 6 Leopard BLUE 1 6 4 Elephant BLUE 1 6 0 Wolf BLUE 1 5 3 Leopard RED 1 3 3 Elephant RED 1 2 6 Wolf RED 1 2 4 Mouse RED 1 2 0 Cat RED 1 1 5 Dog RED 1 1 1 Tiger RED 1 0 6 Lion RED 1 0 0 blue 5 6 2 6 3 2 2 2 3 6 3 5 3 2 3 3 3 

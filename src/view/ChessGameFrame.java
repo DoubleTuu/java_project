@@ -11,6 +11,8 @@ import java.awt.*;
 import java.io.File;
 import java.lang.reflect.MalformedParametersException;
 
+import static view.aiFrame.AIframe;
+
 /**
  * 这个类表示游戏过程中的整个游戏界面，是一切的载体
  */
@@ -28,6 +30,7 @@ public class ChessGameFrame extends JFrame {
     public Clip clip;
     public JTextField roundsButton = new JTextField("Rounds:1");
     public JTextField currentColor = new JTextField("Turn: Blue");
+    public JButton aiModeButton=new JButton();
     public JButton classicModeButton=new JButton();
     public JButton exitButton =new JButton();
     public JButton musicButton=new JButton();
@@ -84,7 +87,7 @@ public class ChessGameFrame extends JFrame {
         });
     }
     public void addUserButton(){
-        userButton.setLocation(810, 810/10*4);
+        userButton.setLocation(810, 810/10*5);
         userButton.setSize(200, 60);
         userButton.setBackground(new Color(245, 226, 178));
         userButton.setFont(new Font("华文行楷", Font.BOLD,40));
@@ -96,15 +99,33 @@ public class ChessGameFrame extends JFrame {
             userFrame.setVisible(true);
         });
     }
+    public void addaiModeButton()
+    {
+        aiModeButton = new JButton("人机模式");
+        aiModeButton.setLocation(810, 810/10*1 );
+        aiModeButton.setSize(200, 60);
+        aiModeButton.setBackground(new Color(245, 226, 178));
+        aiModeButton.setFont(new Font("华文行楷", Font.BOLD,40));
+        aiModeButton.setBorderPainted(false);
+        add(aiModeButton);
+        aiModeButton.addActionListener(e ->
+        {
+            System.out.println("Start AIMode");
+            AIframe=new aiFrame();
+            AIframe.setVisible(true);
+            repaint();
+//            dispose();
+        });
+    }
     public void initiailUI()
     {
         setmenuBackground();
-
+        addaiModeButton();
         addUserButton();
 //        JButton functionbutton = new JButton("功能");
 
         classicModeButton = new JButton("经典模式");
-        classicModeButton.setLocation(810, 810/10 );
+        classicModeButton.setLocation(810, 810/10*2 );
         classicModeButton.setSize(200, 60);
         classicModeButton.setBackground(new Color(245, 226, 178));
         classicModeButton.setFont(new Font("华文行楷", Font.BOLD,40));
@@ -112,7 +133,7 @@ public class ChessGameFrame extends JFrame {
         add(classicModeButton);
 
         exitButton = new JButton("退出");
-        exitButton.setLocation(810, 810/10*3 );
+        exitButton.setLocation(810, 810/10*4 );
         exitButton.setSize(200, 60);
         exitButton.setBackground(new Color(245, 226, 178));
         exitButton.setFont(new Font("华文行楷", Font.BOLD,40));
@@ -120,7 +141,7 @@ public class ChessGameFrame extends JFrame {
         this.add(exitButton);
 
         musicButton = new JButton("音乐");
-        musicButton.setLocation(810, 810 / 10*2);
+        musicButton.setLocation(810, 810 / 10*3);
         musicButton.setSize(200, 60);
         musicButton.setBackground(new Color(245, 226, 178));
         musicButton.setFont(new Font("华文行楷", Font.BOLD,40));
@@ -138,15 +159,16 @@ public class ChessGameFrame extends JFrame {
         {
             System.out.println("Start Classic Mode");
 //            remove(menubackGround);
-            menubackGround.setVisible(false);
 //            remove(classicModeButton);
-            classicModeButton.setVisible(false);
 //            remove(exitButton);
-            exitButton.setVisible(false);
 //            remove(musicButton);
+//            GameController.functionbutton.setVisible(true);
+            aiModeButton.setVisible(false);
+            menubackGround.setVisible(false);
+            classicModeButton.setVisible(false);
+            exitButton.setVisible(false);
             musicButton.setVisible(false);
             userButton.setVisible(false);
-//            GameController.functionbutton.setVisible(true);
             repaint();
             classicMode();
             repaint();
@@ -236,7 +258,7 @@ public class ChessGameFrame extends JFrame {
     }
 
 
-    private void addRoundButton()
+    public void addRoundButton()
     {
         roundsButton.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3/2, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         roundsButton.setFont(new Font("Arial", Font.BOLD, 25));
@@ -244,7 +266,7 @@ public class ChessGameFrame extends JFrame {
         roundsButton.setVisible(true);
         add(roundsButton);
     }
-    private void addPlayerButton()
+    public void addPlayerButton()
     {
         currentColor.setBounds(ONE_CHESS_SIZE/2, ONE_CHESS_SIZE*3, ONE_CHESS_SIZE*2, ONE_CHESS_SIZE);
         currentColor.setFont(new Font("Arial", Font.BOLD, 25));
@@ -257,7 +279,7 @@ public class ChessGameFrame extends JFrame {
     /**
      * 在游戏面板中添加标签
      */
-    private void addLabel() {
+    public void addLabel() {
          statusLabel = new JLabel("欢迎来到斗兽棋");
         statusLabel.setLocation(HEIGTH, HEIGTH / 10);
         statusLabel.setSize(200, 60);
@@ -286,6 +308,10 @@ public class ChessGameFrame extends JFrame {
             currentColor.setText("Turn: Blue");
             currentColor.setForeground(Color.BLUE);
         }
+    }
+    public void setcurrentplayer()
+    {
+        currentColor.setText("Turn: Blue");
     }
     public  void initTurn(){
         currentColor.setText("Turn: Blue");

@@ -19,6 +19,7 @@ import static model.Constant.CHESSBOARD_COL_SIZE;
 import static model.Constant.CHESSBOARD_ROW_SIZE;
 import static view.ChessGameFrame.mainFrame;
 import static view.SaveAndLoadFrame.ans;
+import static view.aiFrame.AIframe;
 
 /**
  * Controller is the connection between model and view,
@@ -129,6 +130,7 @@ public class GameController implements GameListener {
             chessGameFrame.exitButton.setVisible(true);
             chessGameFrame.musicButton.setVisible(true);
             chessGameFrame.classicModeButton.setVisible(true);
+            chessGameFrame.aiModeButton.setVisible(true);
             chessGameFrame.userButton.setVisible(true);
             backbutton.setVisible(false);
             remove_Footprint();
@@ -138,8 +140,9 @@ public class GameController implements GameListener {
     }
 
 
-    public void initialize() {
-
+    public void initialize()
+    {
+        mainFrame.setcurrentplayer();
         remove_Move();
         remove_Footprint();
         currentPlayer = PlayerColor.BLUE;
@@ -173,6 +176,26 @@ public class GameController implements GameListener {
             cheat--;
         }
         mainFrame.setRounds();
+        System.out.println("currentPlayer");
+        System.out.println(currentPlayer);
+        if(AIframe.aibegin!=0&&currentPlayer==PlayerColor.RED)
+        {
+            System.out.println("AI");
+            AIframe.aimove(AIframe.aibegin);
+            if(cheat==0)
+            {
+                mainFrame.setTurn();
+                currentPlayer = currentPlayer == PlayerColor.BLUE ? PlayerColor.RED : PlayerColor.BLUE;
+                SaveAndLoadFrame.turnturn^=1;
+                SaveAndLoadFrame.map1=model.grid;
+                SaveAndLoadFrame.turn++;
+            }
+            else
+            {
+                cheat--;
+            }
+            mainFrame.setRounds();
+        }
     }
 
     public boolean winBlue() {
@@ -263,29 +286,6 @@ public class GameController implements GameListener {
     }
 
 
-    // click an empty cell
-    @Override
-    public void onPlayerClickCell(ChessboardPoint point, CellComponent component)
-    {
-        if (selectedPoint != null && model.isValidMove(selectedPoint, point))
-        {
-            addclickMusic();
-            ChessboardPoint selectedPoint1 = selectedPoint;
-            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
-            view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
-            model.moveChessPiece(selectedPoint, point);
-            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
-            selectedPoint = null;
-            swapColor();
-            view.repaint();
-            // TODO: if the chess enter Dens or Traps and so on
-            remove_Move();
-            remove_Footprint();
-            addFootprint(selectedPoint1, point);
-        }
-        judgeWin();
-    }
-
     public void addclickMusic() throws MalformedParametersException
     {
         try
@@ -318,6 +318,30 @@ public class GameController implements GameListener {
             ex.printStackTrace();
         }
     }
+    // click an empty cell
+    @Override
+    public void onPlayerClickCell(ChessboardPoint point, CellComponent component)
+    {
+        if (selectedPoint != null && model.isValidMove(selectedPoint, point))
+        {
+            addclickMusic();
+            ChessboardPoint selectedPoint1 = selectedPoint;
+            ans.append(selectedPoint.getRow()+" "+selectedPoint.getCol()+" "+point.getRow()+" "+point.getCol()+" ");
+            view.regretStack.push(new RegretNode(1,model.getChessPieceAt(selectedPoint),selectedPoint,model.getChessPieceAt(selectedPoint),point));
+            model.moveChessPiece(selectedPoint, point);
+            view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
+            selectedPoint = null;
+
+
+            // TODO: if the chess enter Dens or Traps and so on
+            remove_Move();
+            remove_Footprint();
+            addFootprint(selectedPoint1, point);
+            swapColor();
+            view.repaint();
+        }
+        judgeWin();
+    }
     // click a cell with a chess
     public void onPlayerClickChessPiece(ChessboardPoint point, AnimalChessComponent component)
     {
@@ -328,8 +352,9 @@ public class GameController implements GameListener {
                 addclickMusic();
                 selectedPoint = point;
                 component.setSelected(true);
-                component.repaint();//重新画棋子
-                System.out.println("asd");
+//                component.repaint();//重新画棋子
+                view.repaint();
+//                System.out.println("asd");
                 whereToMove(selectedPoint);
             }
         }
@@ -338,7 +363,8 @@ public class GameController implements GameListener {
             addclickMusic();
             selectedPoint = null;
             component.setSelected(false);
-            component.repaint();
+//            component.repaint();
+            view.repaint();
             remove_Move();
 //            chessGameFrame.setVisible(true);
         }
@@ -355,16 +381,23 @@ public class GameController implements GameListener {
             view.getGridComponentAt(point).removeAll();
             view.setChessComponentAtGrid(point, view.removeChessComponentAtGrid(selectedPoint));
             selectedPoint = null;
-            swapColor();
-            view.repaint();
+
+
             remove_Move();
             remove_Footprint();
             addFootprint(selectedPoint1, point);
+            swapColor();
+            view.repaint();
         }
         judgeWin();
     }
     public void judgeWin()
     {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                gameController.view.repaint();
+            }
+        });
         if(winBlue())
         {
             if(user1!=null)
