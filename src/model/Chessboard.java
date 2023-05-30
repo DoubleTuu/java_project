@@ -29,7 +29,7 @@ public class Chessboard {
 //        initPiecesload();
 //        return this;
 //    }
-    private void initGrid()
+    public void initGrid()
     {
         for (int i = 0; i < Constant.CHESSBOARD_ROW_SIZE.getNum(); i++)
         {

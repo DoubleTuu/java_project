@@ -127,14 +127,14 @@ public class UserFrame extends JFrame {
         this.setSize(620, 350);
         this.getContentPane().removeAll();
         repaint();
-        JLabel userNameLabel1 = new JLabel("用户名1");
+        JLabel userNameLabel1 = new JLabel("蓝方");
         userNameLabel1.setLocation(15, 60);
         userNameLabel1.setSize(80, 30);
         userNameLabel1.setFont(new Font("宋体", Font.BOLD, 20));
-        JLabel passwordLabel1 = new JLabel("密码1");
+        JLabel passwordLabel1 = new JLabel("蓝方密码");
         passwordLabel1.setLocation(15, 130);
         passwordLabel1.setSize(80, 30);
-        passwordLabel1.setFont(new Font("宋体", Font.BOLD, 20));
+        passwordLabel1.setFont(new Font("宋体", Font.BOLD, 15));
         JTextField userNameText1 = new JTextField(16);
         userNameText1.setLocation(100, 60);
         userNameText1.setSize(170, 30);
@@ -144,14 +144,14 @@ public class UserFrame extends JFrame {
         passwordText1.setSize(170, 30);
         passwordText1.setEditable(true);
 
-        JLabel userNameLabel2 = new JLabel("用户名2");
+        JLabel userNameLabel2 = new JLabel("红方");
         userNameLabel2.setLocation(300, 60);
         userNameLabel2.setSize(80, 30);
         userNameLabel2.setFont(new Font("宋体", Font.BOLD, 20));
-        JLabel passwordLabel2 = new JLabel("密码2");
+        JLabel passwordLabel2 = new JLabel("红方密码");
         passwordLabel2.setLocation(300, 130);
         passwordLabel2.setSize(80, 30);
-        passwordLabel2.setFont(new Font("宋体", Font.BOLD, 20));
+        passwordLabel2.setFont(new Font("宋体", Font.BOLD, 15));
         JTextField userNameText2 = new JTextField(16);
         userNameText2.setLocation(385, 60);
         userNameText2.setSize(170, 30);

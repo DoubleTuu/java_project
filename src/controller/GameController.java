@@ -135,6 +135,11 @@ public class GameController implements GameListener {
             backbutton.setVisible(false);
             if(AIframe!=null)
             {
+                model=new Chessboard();
+                view=new ChessboardComponent(72);
+//                gameController.view.initiateChessComponent(model);
+//                gameController.view.initiateGridComponents();
+                gameController.remove_Footprint();
                 initialize();
                 mainFrame.initTurn();
                 AIframe=null;

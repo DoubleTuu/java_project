@@ -11,6 +11,9 @@ import controller.GameController.*;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
+
+import static view.ChessGameFrame.mainFrame;
+
 public class SaveAndLoadFrame extends JFrame
 {
     public static int turnturn=0;
@@ -155,6 +158,7 @@ public class SaveAndLoadFrame extends JFrame
                     }
                     int tuen=Save_and_Load.rounds;
                     gameController.initialize();
+//                    mainFrame.initTurn();
 //                    repaint();
 //                    try {
 //                        Thread.sleep(2000); // 暂停2秒钟

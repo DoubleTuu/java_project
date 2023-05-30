@@ -46,7 +46,6 @@ public class aiFrame extends JFrame
     }
     public void spMode()
     {
-
         GameController.gameController = new GameController(mainFrame.getChessboardComponent(), new Chessboard(), mainFrame);
         GameController.gameController.resetbutton.setVisible(true);
         GameController.gameController.functionbutton.setVisible(true);
